@@ -16,9 +16,9 @@ Z = booth(X, Y)
 fig = plt.figure()
 ax = plt.axes(projection='3d')
 ax.plot_surface(X, Y, Z, cmap='Greens', alpha=.65)
-ax.set_xlabel('X axis')
-ax.set_ylabel('Y axis')
-ax.set_zlabel('Z axis')
+ax.set_xlabel('X Label')
+ax.set_ylabel('Y Label')
+ax.set_zlabel('Z Label')
 
 #algorithm
 x = -10
@@ -31,11 +31,16 @@ xarr.append(x)
 yarr.append(y)
 zarr.append(z)
 
-a=0.01 #learning rate
 i=0
+a=0.01 #learning rate
+Dx=0 #difference between last two variable values
+Dy=0
+gama=0.1
 while z>0.0001:
-    x = x - a*booth_dx(x, y)
-    y = y - a*booth_dy(x, y)
+    Dx = a*booth_dx(x, y) + gama*Dx
+    Dy = a*booth_dy(x, y) + gama*Dy
+    x = x - Dx
+    y = y - Dy
     z = booth(x, y)
     ax.plot(x, y, z, markerfacecolor='r', markeredgecolor='r', marker='o', markersize=5)
     print("Iteration ",i,": x =",x," y =",y," z =",z)
