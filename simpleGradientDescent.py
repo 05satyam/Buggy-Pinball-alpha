@@ -1,16 +1,19 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from functions import *
+from learningRates import *
 
 xarr=[]#these arrays are for showing the points in the plot
 yarr=[]
 zarr=[]
 
-xvals = np.linspace(-10, 10, 30)
-yvals = np.linspace(-10, 10, 30)
+A=10
+xvals = np.linspace(-5.12, 5.12, 30)
+yvals = np.linspace(-5.12, 5.12, 30)
 
 X, Y = np.meshgrid(xvals, yvals)
-Z = booth(X, Y)
+rastr=np.vectorize(rastrigin)
+Z = rastr(X, Y, A)
 
 #plotting the function
 fig = plt.figure()
@@ -21,9 +24,9 @@ ax.set_ylabel('Y axis')
 ax.set_zlabel('Z axis')
 
 #algorithm
-x = -10
-y = -10
-z = booth(x, y)
+x = -5.12
+y = -5.12
+z = rastrigin(x, y, A)
 ax.plot(x, y, z, markerfacecolor='r', markeredgecolor='r', marker='o', markersize=5)
 print("Initial guess: x =",x," y =",y," z =",z)
 
@@ -31,18 +34,18 @@ xarr.append(x)
 yarr.append(y)
 zarr.append(z)
 
-a=0.01 #learning rate
-i=0
+i=1
 while z>0.0001:
-    x = x - a*booth_dx(x, y)
-    y = y - a*booth_dy(x, y)
-    z = booth(x, y)
+    a = simpleLR(0.01)
+    x = x - a*rastrigin_dx(x, y, A)
+    y = y - a*rastrigin_dy(x, y, A)
+    z = rastrigin(x, y, A)
     ax.plot(x, y, z, markerfacecolor='r', markeredgecolor='r', marker='o', markersize=5)
     print("Iteration ",i,": x =",x," y =",y," z =",z)
+    print("Learning rate is ", a)
     
-    if i==1000: #after a thousand iterations, stop
+    if i==100: #after a thousand iterations, stop
         break
-    
     xarr.append(x)
     yarr.append(y)
     zarr.append(z)

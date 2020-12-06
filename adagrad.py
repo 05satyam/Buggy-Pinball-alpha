@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from functions import *
+from learningRates import *
 
 xarr=[]#these arrays are for showing the points in the plot
 yarr=[]
@@ -31,12 +32,12 @@ xarr.append(x)
 yarr.append(y)
 zarr.append(z)
 
-a=0.01 #learning rate
-i=0
+i=1
 e=1e-6 #standard value to avoid dividing with 0
 Gx=0 #the matrix from the derirative
 Gy=0
 while z>0.0001:
+    a = simpleLR(10)
     Gx = Gx + booth_dx(x, y)**2
     Gy = Gy + booth_dy(x, y)**2
     x = x - a*booth_dx(x, y)/(np.sqrt(Gy)+e)
