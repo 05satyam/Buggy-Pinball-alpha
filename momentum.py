@@ -8,8 +8,8 @@ yarr=[]
 zarr=[]
 
 A=10
-xvals = np.linspace(-5.12, 5.12, 30)
-yvals = np.linspace(-5.12, 5.12, 30)
+xvals = np.linspace(-5.12, 5.12, 100)
+yvals = np.linspace(-5.12, 5.12, 100)
 
 X, Y = np.meshgrid(xvals, yvals)
 rastr=np.vectorize(rastrigin)
@@ -39,7 +39,7 @@ Dx=0 #difference between last two variable values
 Dy=0
 gama=0.1
 while z>0.0001:
-    a = simpleLR(0.001)
+    a = simpleLR(0.005)
     Dx = a*rastrigin_dx(x, y, A) + gama*Dx
     Dy = a*rastrigin_dy(x, y, A) + gama*Dy
     x = x - Dx
