@@ -41,7 +41,7 @@ arr1=[]
 arr2=[]
 
 while z>0.0001:
-    a = periodicalLR(0.1, i, 10, 1)
+    a = periodicalLR(0.1, i, 300, 5)
     Gx = gama*Gx + (1-gama)*booth_dx(x, y)**2
     Gy = gama*Gy + (1-gama)*booth_dy(x, y)**2
     x = x - a*booth_dx(x, y)/(np.sqrt(Gy)+e)

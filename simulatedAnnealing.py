@@ -3,11 +3,11 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 from functions import *
-
 A=10
+b=0.0001
 
 def simulated_annealing(x, y):
-    initial_temp = 90
+    initial_temp = 10
     final_temp = .1
     alpha = 0.01
     
@@ -19,18 +19,12 @@ def simulated_annealing(x, y):
     while initial_temp > final_temp:
         z=rastrigin(solution_x, solution_y, A)
         print("Iteration ",i,": x =",solution_x," y =",solution_y," z =",z)
+        if z<0.0001:
+            break
         
-        rand_x = random.randint(0,2)
-        rand_y = random.randint(0,2)
-        if solution_x<=-5.12 or rand_x==0:
-            neighbor_x=solution_x+0.1
-        elif solution_x>=5.12 or rand_x==1:
-            neighbor_x=solution_x-0.1
-        
-        if solution_y<=-5.12 or rand_y==0:
-            neighbor_y=solution_y+0.1
-        elif solution_y>=5.12 or rand_y==1:
-            neighbor_y=solution_y-0.1
+        # get random neighbor
+        neighbor_x=random.uniform(-5.12, 5.12)
+        neighbor_y=random.uniform(-5.12, 5.12)
 
         # Check if neighbor is best so far
         cost_diff = z - rastrigin(neighbor_x, neighbor_y, A)
@@ -46,10 +40,9 @@ def simulated_annealing(x, y):
                 solution_y = neighbor_y
             
         # decrement the temperature
-        initial_temp-=alpha
+        initial_temp=initial_temp/(1+b*initial_temp)
         i+=1
 
     return solution_x, solution_y
 
 solution = simulated_annealing(-5.12, -5.12)
-print("Answer is: ", solution[0], ", ",solution[1])
