@@ -7,24 +7,24 @@ xarr=[]#these arrays are for showing the points in the plot
 yarr=[]
 zarr=[]
 
-xvals = np.linspace(-10, 10, 30)
-yvals = np.linspace(-10, 10, 30)
+xvals = np.linspace(-2, 2, 30)
+yvals = np.linspace(-2, 2, 30)
 
 X, Y = np.meshgrid(xvals, yvals)
-Z = booth(X, Y)
+Z = rosenbrock(X, Y)
 
 #plotting the function
 fig = plt.figure()
 ax = plt.axes(projection='3d')
-ax.plot_surface(X, Y, Z, cmap='Greens', alpha=.65)
+ax.plot_surface(X, Y, Z, cmap='inferno', alpha=.65)
 ax.set_xlabel('X Label')
 ax.set_ylabel('Y Label')
 ax.set_zlabel('Z Label')
 
 #algorithm
-x = -10
-y = -10
-z = booth(x, y)
+x = 2
+y = -2
+z = rosenbrock(x, y)
 ax.plot(x, y, z, markerfacecolor='r', markeredgecolor='r', marker='o', markersize=5)
 print("Initial guess: x =",x," y =",y," z =",z)
 
@@ -36,13 +36,13 @@ i=1
 e=1e-6 #standard value to avoid dividing with 0
 Gx=0 #the matrix from the derirative
 Gy=0
-while z>0.0001:
-    a = simpleLR(10)
-    Gx = Gx + booth_dx(x, y)**2
-    Gy = Gy + booth_dy(x, y)**2
-    x = x - a*booth_dx(x, y)/(np.sqrt(Gy)+e)
-    y = y - a*booth_dy(x, y)/(np.sqrt(Gy)+e)
-    z = booth(x, y)
+while z>0.000001:
+    a = simpleLR(.2)
+    Gx = Gx + rosenbrock_dx(x, y)**2
+    Gy = Gy + rosenbrock_dy(x, y)**2
+    x = x - a*rosenbrock_dx(x, y)/(np.sqrt(Gy)+e)
+    y = y - a*rosenbrock_dy(x, y)/(np.sqrt(Gy)+e)
+    z = rosenbrock(x, y)
     ax.plot(x, y, z, markerfacecolor='r', markeredgecolor='r', marker='o', markersize=5)
     print("Iteration ",i,": x =",x," y =",y," z =",z)
     
