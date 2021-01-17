@@ -4,11 +4,23 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 from functions import *
+from learningRates import *
 
 times=[]
 results=[]
 
-def get_neighbors(cur_val, func_low, func_up): # creating random neighbor on a dimension within a limit
+A = 10      # rastrigin factor
+init_T = 1       # initial threshold
+rounds = 100 # number of parts that the threshold sequence will contain
+steps = 10 # iterations that will occur within every threshold value
+init_nei_dist = 3 # the distance that a possible neighbor can have in x or y dimension
+d = np.linspace(init_nei_dist, 0.1, rounds*steps)
+low_x=-5.12
+up_x=5.12
+low_y=-5.12
+up_y=5.12
+
+def get_neighbors(cur_val, func_low, func_up, neighbor_distance): # creating random neighbor on a dimension within a limit
     if cur_val-neighbor_distance>func_low:
         lower=cur_val-neighbor_distance
     else:
@@ -22,41 +34,33 @@ def get_neighbors(cur_val, func_low, func_up): # creating random neighbor on a d
 
 for exp in range(0, 100000):
     start_time=time.time()
-    A = 10      # rastrigin factor
-    x = random.uniform(-5, 5) # initial solutions
-    y = random.uniform(-5, 5)
-    init_T = 1       # initial threshold
-    rounds = 100 # number of parts that the threshold sequence will contain
-    steps = 10 # iterations that will occur within every threshold value
-    neighbor_distance = 1 # the distance that a possible neighbor can have in x or y dimension
-    T = np.linspace(init_T, 0, rounds)
-
-    j=1
+    x = random.uniform(low_x, up_x) # initial solutions
+    y = random.uniform(low_y, up_y)
+    j=1 # total iterations count for every experiment
     change_count=0 # if result does not change for some iterations, the algorithm has reached its best
-    for t in T:
+    for t in range(0, rounds):
         for i in range(0, steps):
             # get random neighbor
-            neighbor_x=get_neighbors(x, -5, 5)
-            neighbor_y=get_neighbors(y, -5, 5)
+            neighbor_x=get_neighbors(x, low_x, up_x, d[j-1])
+            neighbor_y=get_neighbors(y, low_y, up_y, d[j-1])
             
             # Check if neighbor is best so far
-            #cost_diff = rastrigin(x, y, A) - rastrigin(neighbor_x, neighbor_y, A)
-            cost_diff = ackley(x, y) - ackley(neighbor_x, neighbor_y)
+            cost_diff = rastrigin(x, y, A) - rastrigin(neighbor_x, neighbor_y, A)
+            #cost_diff = ackley(x, y) - ackley(neighbor_x, neighbor_y)
             
-            # if the new solution is better, accept it
-            if cost_diff > -t:
+            if cost_diff > -cosineLR(init_T, j, rounds*steps): # accept or reject neighbor
                 x = neighbor_x
                 y = neighbor_y
-                change_count=0
                 
             if change_count==200:
                 break
             
             j+=1
+            change_count+=1
     
     print(exp)
-    #z=rastrigin(x, y, A)
-    z=ackley(x, y)
+    z=rastrigin(x, y, A)
+    #z=ackley(x, y)
     results.append(z)
     total_time=time.time()-start_time
     times.append(total_time)
