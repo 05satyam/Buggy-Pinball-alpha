@@ -38,10 +38,10 @@ for t in T:
         neighbor_y=get_neighbors(y, -5.12, 5.12)
         
         # Check if neighbor is best so far
-        cost_diff = rastrigin(x, y, A) - rastrigin(neighbor_x, neighbor_y, A)
+        DE = rastrigin(x, y, A) - rastrigin(neighbor_x, neighbor_y, A)
         
         # if the new solution is better, accept it
-        if cost_diff > -t:
+        if DE > -t:
             x = neighbor_x
             y = neighbor_y
             change_count=0

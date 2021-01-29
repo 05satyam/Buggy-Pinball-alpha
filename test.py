@@ -27,10 +27,10 @@ for i in range(0, 2):
     x = random.uniform(-5, 5) # initial solutions
     y = random.uniform(-5, 5)
     z = rastrigin(x, y, 10)
-    ax.plot(x, y, z, markerfacecolor='r', markeredgecolor='r', marker='o', markersize=5)
+    ax.plot(x, y, z, markerfacecolor='r', markeredgecolor='r', marker='o', markersize=5)    #plotting the points
     xarr.append(x)
     yarr.append(y)
     zarr.append(z)
     
-ax.plot(xarr, yarr, zarr, color='b')
+ax.plot(xarr, yarr, zarr, color='b')    #connecting the points
 plt.show()
