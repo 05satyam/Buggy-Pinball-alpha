@@ -7,65 +7,61 @@ from functions import *
 
 times=[]
 results=[]
+A = 10      # rastrigin factor
+final_temp = .01   # final temperature
+b = 0.9985 # reducing factor of temperature
+neighbor_distance = 1 # the distance that a possible neighbor can have in x or y dimension
+low_x=-5.12 #limits of dimensions that we move around
+up_x=5.12
+low_y=-5.12
+up_y=5.12
+num_of_iter=1000 #number of experiment iterations
 
 def get_neighbors(cur_val, func_low, func_up): # creating random neighbor on a dimension within a limit
-    if cur_val-neighbor_distance>func_low:
+    if cur_val-neighbor_distance>func_low: #setting lower limits
         lower=cur_val-neighbor_distance
     else:
         lower=func_low
-            
-    if cur_val+neighbor_distance<func_up:
+        
+    if cur_val+neighbor_distance<func_up: #setting upper limits
         upper=cur_val+neighbor_distance
     else:
-        upper=func_up        
-    return random.uniform(lower, upper)
-
-for exp in range(0, 100000):
-    start_time=time.time()
-    #A = 10            # rastrigin factor
-    b = 0.001       # slow cooling variable
-    x = random.uniform(-5, 5) # initial solutions
-    y = random.uniform(-5, 5)
-    initial_temp = 10 # starting temperature
-    final_temp = .1   # final temperature
-    neighbor_distance = 1 # the distance that a possible neighbor can have in x or y dimension
-    
-    #z=rastrigin(x, y, A)
-    z=ackley(x, y)
-    i=0 
-    change_count=0 # if result does not change for some iterations, the algorithm has reached its best
-    while initial_temp > final_temp:
-        neighbor_x=get_neighbors(x, -5, 5)
-        neighbor_y=get_neighbors(y, -5, 5)
-    
-        #cost_diff = z - rastrigin(neighbor_x, neighbor_y, A)
-        cost_diff = z - ackley(neighbor_x, neighbor_y)
+        upper=func_up
         
-        if cost_diff > 0:   # if the new solution is better, accept it
+    return random.uniform(lower, upper) #get random neighbor
+
+for exp in range(0, num_of_iter):
+    start_time=time.time()
+    T = 10 # starting temperature
+    x = random.uniform(low_x, up_x) # initial solutions
+    y = random.uniform(low_y, up_y)
+    
+    z=rastrigin(x, y, A)
+    #z=ackley(x, y)
+    while T>final_temp:
+        neighbor_x=get_neighbors(x, low_x, up_x)
+        neighbor_y=get_neighbors(y, low_y, up_y)
+    
+        DE = z - rastrigin(neighbor_x, neighbor_y, A) #cost difference
+        #DE = ackley(x, y) - ackley(neighbor_x, neighbor_y)
+        
+        if DE > 0:   # if the neighbor is better, accept it
             x = neighbor_x
             y = neighbor_y
-            change_count=0
-        else:   # if the new solution is not better, accept it with a probability of e^(-cost/temp)
-            if random.uniform(0, 1) < math.exp(cost_diff / initial_temp):
+        else:   # if not, accept it with a probability
+            if random.uniform(0, 1) < math.exp(DE / T):
                 x = neighbor_x
                 y = neighbor_y
-                change_count=0
-                
-        if change_count==200:
-            break
         
-        #z=rastrigin(x, y, A)
-        z=ackley(x, y) # this result is used in the next iteration to compare cost difference
+        z=rastrigin(x, y, A)
+        #z=ackley(x, y)
+        T=b*T
         #print("Iteration ",i,": x =",x," y =",y," z =",z)
-        
-        initial_temp=initial_temp/(1+b*initial_temp)# decrement the temperature via slow cooling
-        i+=1
-        change_count+=1
     print(exp)
-    results.append(z)
+    results.append(z) #collect accuracy and time results of each algorithm run
     total_time=time.time()-start_time
     times.append(total_time)
 
-results_average=sum(results)/len(results)
+results_average=sum(results)/len(results) #get an average
 time_average=sum(times)/len(times)
-print("After 1000000 iterations of Simulated Annealing it is found that it takes ",time_average," seconds and has a distance of ",results_average, " from the global minimum")
+print("After",num_of_iter,"iterations of Simulated Annealing it is found that it takes ",time_average," seconds and to have an accuracy of ",results_average, " from the global minimum")
