@@ -10,7 +10,7 @@ results=[]
 
 A = 10      # rastrigin factor
 init_T = 1       # initial threshold
-rounds = 100 # number of parts that the threshold sequence will contain
+rounds = 3500 # number of parts that the threshold sequence will contain
 steps = 10 # iterations that will occur within every threshold value
 T = np.linspace(init_T, 0, rounds)
 low_x=-5.12

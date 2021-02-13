@@ -41,7 +41,7 @@ for t in T:
         DE = rastrigin(x, y, A) - rastrigin(neighbor_x, neighbor_y, A)
         
         # if the new solution is better, accept it
-        if DE > -t:
+        if DE < -t:
             x = neighbor_x
             y = neighbor_y
             change_count=0

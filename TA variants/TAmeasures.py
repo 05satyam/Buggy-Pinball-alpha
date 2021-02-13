@@ -9,14 +9,14 @@ times=[]
 results=[]
 A = 10      # rastrigin factor
 init_T = 1       # initial threshold
-rounds = 8000 # number of parts that the threshold sequence will contain
+rounds = 10000 # number of parts that the threshold sequence will contain
 neighbor_distance = 1 # the distance that a possible neighbor can have in x or y dimension
 T = np.linspace(init_T, 0, rounds)  #all threshold values for the TA
 low_x=-5.12 #limits of dimensions that we move around
 up_x=5.12
 low_y=-5.12
 up_y=5.12
-num_of_iter=1000 #number of experiment iterations
+num_of_iter=10000 #number of experiment iterations
 
 def get_neighbors(cur_val, func_low, func_up): # creating random neighbor in one dimension within a limit
     if cur_val-neighbor_distance>func_low: #setting lower limits

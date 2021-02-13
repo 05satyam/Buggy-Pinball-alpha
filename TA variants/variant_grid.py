@@ -9,17 +9,16 @@ times=[]
 results=[]
 
 A = 10      # rastrigin factor
-init_T = 0.5       # initial threshold
+init_T = 0.2       # initial threshold
 rounds = 100 # number of parts that the threshold sequence will contain
-steps = 10 # iterations that will occur within every threshold value
 T = np.linspace(init_T, 0, rounds)
 low_x=-5.12
 up_x=5.12
 low_y=-5.12
 up_y=5.12
-num_of_points=1000 #factor to determine how smaller of the initial value the trajectory step will be
-num_of_iter=1000
-neighbor_distance = 0.3 # the distance that a possible neighbor can have in x or y dimension
+num_of_points=200 #factor to determine how smaller of the initial value the trajectory step will be
+num_of_iter=10000
+neighbor_distance = 0.2 # the distance that a possible neighbor can have in x or y dimension
 
 def get_neighbors(cur_val, func_low, func_up): # creating random neighbor on a dimension within a limit
     if cur_val-neighbor_distance>func_low:

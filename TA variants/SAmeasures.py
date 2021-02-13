@@ -9,13 +9,13 @@ times=[]
 results=[]
 A = 10      # rastrigin factor
 final_temp = .01   # final temperature
-b = 0.9985 # reducing factor of temperature
+b = 0.9987 # reducing factor of temperature
 neighbor_distance = 1 # the distance that a possible neighbor can have in x or y dimension
 low_x=-5.12 #limits of dimensions that we move around
 up_x=5.12
 low_y=-5.12
 up_y=5.12
-num_of_iter=1000 #number of experiment iterations
+num_of_iter=10000 #number of experiment iterations
 
 def get_neighbors(cur_val, func_low, func_up): # creating random neighbor on a dimension within a limit
     if cur_val-neighbor_distance>func_low: #setting lower limits
