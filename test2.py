@@ -66,7 +66,7 @@ for i in range(0, 1):
             ax.plot(xarr3, yarr3, zarr3, color='g')
             
             print(rastrigin(-4.3, -4.3, 10))
-            print(rastrigin(-4.37, -4.37, 10))
+            print(rastrigin(-4.36772, -4.36772, 10))
             print(rastrigin(-4.4, -4.4, 10))
             break
             

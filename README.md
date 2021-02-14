@@ -15,4 +15,6 @@ Te = threshold exponential decay
 
 tr = trajectory search
 
+tr2 = new trajectory search (line-function intersection)
+
 grid = search n points, go to the best, and continue with TA
