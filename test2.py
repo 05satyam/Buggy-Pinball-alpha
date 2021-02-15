@@ -35,39 +35,30 @@ for i in range(0, 1):
         xarr.append(x)
         yarr.append(y)
         zarr.append(z)
-        print("x:",x,"y:",y,"z=",z)
-        if z==rastrigin(x, y, 10):
+        #print("x:",x,"y:",y,"z=",z)
+        onfunc=rastrigin(x, y, 10)
+        if abs(z-onfunc)<0.0001:
             ax.plot(x, y, rastrigin(x, y, 10), markerfacecolor='r', markeredgecolor='r', marker='o', markersize=5)    #plotting the points
             print(rastrigin(x, y, 10))
             break
-        elif z<rastrigin(x, y, 10):
-            ax.plot(x, y, rastrigin(x, y, 10), markerfacecolor='r', markeredgecolor='r', marker='o', markersize=5)    #plotting the points
-            
-            xarr2=[]#these arrays are for showing the points in the plot
-            yarr2=[]
-            zarr2=[]
-            xarr2.append(-4.3)
-            xarr2.append(-4.4)
-            yarr2.append(-4.3)
-            yarr2.append(-4.4)
-            zarr2.append(rastrigin(-4.3, -4.3, 10))
-            zarr2.append(rastrigin(-4.4, -4.4, 10))
-            ax.plot(xarr2, yarr2, zarr2, color='g')
-            
-            xarr3=[]#these arrays are for showing the points in the plot
-            yarr3=[]
-            zarr3=[]
-            xarr3.append(-4.3)
-            xarr3.append(-4.3)
-            yarr3.append(-4.3)
-            yarr3.append(-4.3)
-            zarr3.append(rastrigin(-4.3, -4.3, 10))
-            zarr3.append(z)
-            ax.plot(xarr3, yarr3, zarr3, color='g')
-            
-            print(rastrigin(-4.3, -4.3, 10))
-            print(rastrigin(-4.36772, -4.36772, 10))
-            print(rastrigin(-4.4, -4.4, 10))
+        elif z<onfunc:
+            while abs(z-onfunc)>0.000001:
+                step=step/2
+                print("step is",step)
+                print("z is ", z)
+                print("onfunc is",onfunc)
+                if z>onfunc:
+                    x = x+step
+                    y = y+step
+                    z = z+step
+                else:
+                    x = x-step
+                    y = y-step
+                    z = z-step
+                
+                onfunc=rastrigin(x, y, 10)
+                
+            print("point (",x,",",y,",",z,")")
             break
             
 ax.plot(xarr, yarr, zarr, color='b')    #connecting the points
