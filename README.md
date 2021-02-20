@@ -17,4 +17,6 @@ tr = trajectory search
 
 tr2 = new trajectory search (line-function intersection)
 
+tr3 = stepwise trajectory search (with z dimension descent and line-function intersection)
+
 grid = search n points, go to the best, and continue with TA
