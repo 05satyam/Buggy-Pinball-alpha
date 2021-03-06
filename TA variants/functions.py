@@ -71,3 +71,9 @@ def goldsteinPrince(x, y):
 
 def goldsteinPrince_dx(x, y):
     return (2*(x + y + 1)*(3*x**2 + 6*x*y + - 14*x +3*y**2 - 14*y + 19) + ((x + y + 1)**2)*(6*x + 6*y - 14))*(((2*x - 3*y)**2)*(12*x**2 - 36*x*y - 32*x + 27*y**2 + 48*y + 18) + 30) + (((x + y + 1)**2)*(3*x**2 + 6*x*y + - 14*x + 3*y**2 - 14*y + 19) + 1)*(4*(2*x - 3*y)*(12*x**2  - 36*x*y - 32*x + 27*y**2 + 48*y + 18) + ((2*x - 3*y)**2)*(24*x - 36*y - 32))
+#########################################
+def schwefel(x, y):     # limits -500 <= x <= 500, -512 <= y <= 500
+    return 418.9829*2 - x*math.sin(math.sqrt(abs(x))) - y*math.sin(math.sqrt(abs(y)))
+#########################################
+def shubert(x, y):
+    return 0
