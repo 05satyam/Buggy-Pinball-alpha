@@ -21,6 +21,15 @@ def booth_dy(x, y):
 def rastrigin(x, y, A):   # limits -5.12 <= x,y <= 5.12
     return 2*A + x**2 - A*math.cos(2*math.pi*x) + y**2 - A*math.cos(2*math.pi*y)
 
+def rastrigin4(x, y, z, A):   # limits -5.12 <= x,y,z <= 5.12
+    return 3*A + x**2 - A*math.cos(2*math.pi*x) + y**2 - A*math.cos(2*math.pi*y) + z**2 - A*math.cos(2*math.pi*z)
+
+def rastrigin_d(xvals):
+    result = len(xvals)*10
+    for x in xvals:
+        result += x**2 - 10*math.cos(2*math.pi*x)
+    return result
+
 def rastrigin_dx(x, y, A):
     return 2*x + 2*math.pi*A*math.sin(2*math.pi*x)
 
@@ -75,5 +84,19 @@ def goldsteinPrince_dx(x, y):
 def schwefel(x, y):     # limits -500 <= x <= 500, -512 <= y <= 500
     return 418.9829*2 - x*math.sin(math.sqrt(abs(x))) - y*math.sin(math.sqrt(abs(y)))
 #########################################
+def easom(x, y):        # limits -10 <= x <= 10, -10 <= y <= 10
+    return -math.cos(x)*math.cos(y)*math.exp(-((x - math.pi)**2 + (y - math.pi)**2))
+#########################################
 def shubert(x, y):
-    return 0
+    xval = 0
+    yval = 0
+    for i in range(1, 6):
+        xval += i*math.cos((i + 1)*x + i)
+        yval += i*math.cos((i + 1)*y + i)
+    return xval*yval
+#########################################
+def alpine(x, y):
+    return abs(x*math.sin(x) + 0.1*x) + abs(y*math.sin(y) + 0.1*y)
+#########################################
+def griewank(x, y):
+    return (x**2)/4000 + (y**2)/4000 - (math.cos(x)*math.cos(y)/math.sqrt(2)) + 1
