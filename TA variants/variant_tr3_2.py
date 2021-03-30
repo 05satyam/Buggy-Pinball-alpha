@@ -7,30 +7,12 @@ import time
 
 low=-5.12    #rastrigin
 up=5.12
-# low_x=-512  #eggholder
-# up_x=512
-# low_y=-512
-# up_y=512
-# low_x=-500  #schwefel
-# up_x=500
-# low_y=-500
-# up_y=500 
-# low_x=-50  #griewank
-# up_x=50
-# low_y=-50
-# up_y=50
-# low_x=-10  #easom#shubert#alpine
-# up_x=10
-# low_y=-10
-# up_y=10
-# low_x=-5  #ackley
-# up_x=5    
-# low_y=-5
-# up_y=5
-# low_x=-2  #sphere
-# up_x=2
-# low_y=-2
-# up_y=2
+# low=-500  #schwefel
+# up=500
+# low=-5  #ackley
+# up=5
+# low=-2  #sphere
+# up=2
             
 #################################functions begin###########################################
 def plotPoint(xvals, cost, i, step, a):
@@ -39,15 +21,15 @@ def plotPoint(xvals, cost, i, step, a):
         print(x,",", end =" ")
     print(cost,") step",step,"angle",a)
 #################################functions end############################################
-num_of_iter=100
-dimensions=3 #except cost
+num_of_iter=1
+dimensions=7 #except cost
 #define hyper-parameters
 startStep = -.3
 endStep = -.001
 startAngle = 60
 endAngle = 30
-rounds = 5000
-numOfSteps = 1000
+rounds = 1500000
+numOfSteps = 500
 
 times=[]
 results=[]
@@ -57,14 +39,9 @@ for exp in range(0, num_of_iter):
     for i in range(0, dimensions):
         xvals.append(random.uniform(low, up))
     cost = rastrigin_d(xvals)
-#     z = eggholder(x, y)
-#     z = schwefel(x, y)
-#     z = easom(x, y)
-#     z = shubert(x, y)
-#     z = sphere(x, y)
-#     z = ackley(x, y)
-#     z = alpine(x, y)
-#     z = griewank(x, y)
+#     cost = ackley_d(xvals)
+#     cost = schwefel_d(xvals)
+#     cost = sphere_d(xvals)
     
 #     plotPoint(xvals, cost, -1, startStep, startAngle)
                     
@@ -112,16 +89,11 @@ for exp in range(0, num_of_iter):
                 
             cost = cost + step
             
-            onfunc=rastrigin_d(xvals)
-#             onfunc=eggholder(x, y)
-#             onfunc = schwefel(x, y)
-#             onfunc = easom(x, y)
-#             onfunc = shubert(x, y)
-#             onfunc = sphere(x, y)
-#             onfunc = ackley(x, y)
-#             onfunc = alpine(x, y)
-#             onfunc = griewank(x, y)
-            
+            onfunc = rastrigin_d(xvals)
+#             onfunc = ackley_d(xvals)
+#             onfunc = schwefel_d(xvals)
+#             onfunc = sphere_d(xvals)
+                        
             if firstTime==True:
                 if cost < onfunc:
                     isUnderneath = True
@@ -164,15 +136,9 @@ for exp in range(0, num_of_iter):
                             cost = cost - inCost
                         
                         onfunc = rastrigin_d(xvals)
-#                         onfunc = eggholder(x, y)
-#                         onfunc = schwefel(x, y)
-#                         onfunc = easom(x, y)
-#                         onfunc = shubert(x, y)
-#                         onfunc = sphere(x, y)
-#                         onfunc = ackley(x, y)   
-#                         onfunc = alpine(x, y)
-#                         onfunc = griewank(x, y)
-                        
+#                         onfunc = ackley_d(xvals)
+#                         onfunc = schwefel_d(xvals)
+#                         onfunc = sphere_d(xvals)
                         #if step gets too small, exit because we have a satisfactory accurate solution
                         if inCost==0:
                             cost=onfunc
@@ -206,15 +172,9 @@ for exp in range(0, num_of_iter):
                             cost = cost - inCost
                         
                         onfunc = rastrigin_d(xvals)
-#                         onfunc = eggholder(x, y)
-#                         onfunc = schwefel(x, y)
-#                         onfunc = easom(x, y)
-#                         onfunc = shubert(x, y)
-#                         onfunc = sphere(x, y)
-#                         onfunc = ackley(x, y)   
-#                         onfunc = alpine(x, y)
-#                         onfunc = griewank(x, y)
-                        
+#                         onfunc = ackley_d(xvals)
+#                         onfunc = schwefel_d(xvals)
+#                         onfunc = sphere_d(xvals)
                         #if step gets too small, exit because we have a satisfactory accurate solution
                         if inCost==0:
                             cost = onfunc
@@ -224,6 +184,8 @@ for exp in range(0, num_of_iter):
         i=i+1
         
         if countSteps==numOfSteps or OutOfBounds==True:
+#             print("Not Hit", end =" ")
+#             plotPoint(xvals, cost, i, step, a)
             for j in range(0, dimensions):
                 xvals[j] = xvals[j] - countSteps*xsteps[j]
             cost = cost - countSteps*step
@@ -242,12 +204,12 @@ from xlwt import Workbook
         
 wb = Workbook() 
          
-sheet1 = wb.add_sheet('variantTR3_rastrigin4')
+sheet1 = wb.add_sheet('variantTR3_rastrigin8')
 i=0
 for wr in results:
     sheet1.write(i, 0, wr)
     sheet1.write(i, 1, times[i])
     i+=1
             
-wb.save('variantTR3_rastrigin4.xls')
+wb.save('variantTR3_rastrigin8.xls')
 print("All saved")

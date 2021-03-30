@@ -8,46 +8,30 @@ from functions import *
 times=[]
 results=[]
 A = 10      # rastrigin factor
-init_T = 100             # initial threshold
-rounds = 500000           # number of parts that the threshold sequence will contain
-neighbor_distance = 1   # the distance that a possible neighbor can have in x or y dimension
+init_T = 800            # initial threshold
+rounds = 4000000           # number of parts that the threshold sequence will contain
+neighbor_distance = 300   # the distance that a possible neighbor can have in x or y dimension
 T = np.linspace(init_T, 0, rounds)  #all threshold values for the TA
 dimensions= 2
 
-low=-5.12 #limits of dimensions that we move around
-up=5.12    #rastrigin
-# low_x=-5 #ackley
-# up_x=5
-# low_y=-5
-# up_y=5
-# low_x=-512
-# up_x=512    #eggholder
-# low_y=-512
-# up_y=512
-# low_x=-500  #schwefel
-# up_x=500
-# low_y=-500
-# up_y=500
-# low_x=-10  #easom#shubert#alpine
-# up_x=10
-# low_y=-10
-# up_y=10
-# low_x=-2  #sphere
-# up_x=2
-# low_y=-2
-# up_y=2
-num_of_iter=1000 #number of experiment iterations
+# low=-5.12 #limits of dimensions that we move around
+# up=5.12    #rastrigin
+# low=-5 #ackley
+# up=5
+low=-500  #schwefel
+up=500
+# low=-2  #sphere
+# up=2
+num_of_iter=10 #number of experiment iterations
 
 for exp in range(0, num_of_iter):
+    xvals=[]
     for i in range(0, dimensions):
         xvals.append(random.uniform(low, up))
-    z=rastrigin_d(xvals)
-#     z=ackley(x, y)
-#     z=eggholder(x, y)
-#     z=schwefel(x,y)
-#     z = easom(x, y)
-#     z = sphere(x, y)
-#     z = shubert(x, y)
+#     z = rastrigin_d(xvals)
+#     z = ackley_d(xvals)
+    z = schwefel_d(xvals)
+#     z = sphere_d(xvals)
     
     start_time=time.process_time()
     
@@ -63,27 +47,21 @@ for exp in range(0, num_of_iter):
                 upper = i + neighbor_distance
             else:
                 upper = up
-        neighbors.append(random.uniform(lower, upper))
+            neighbors.append(random.uniform(lower, upper))
             
-        DE = z - rastrigin_d(neighbors) #cost difference
-#         DE = ackley(x, y) - ackley(neighbor_x, neighbor_y)
-#         DE = eggholder(x, y) - eggholder(neighbor_x, neighbor_y)
-#         DE = schwefel(x, y) - schwefel(neighbor_x, neighbor_y)
-#         DE = easom(x, y) - easom(neighbor_x, neighbor_y)
-#         DE = sphere(x, y) - sphere(neighbor_x, neighbor_y)
-#         DE = shubert(x, y) - shubert(neighbor_x, neighbor_y)
+#         DE = z - rastrigin_d(neighbors) #cost difference
+#         DE = z - ackley_d(neighbors)
+        DE = z - schwefel_d(neighbors)
+#         DE = z - sphere_d(neighbors)
         
         if DE > -t:    # if the new solution is better, accept it
             for i in range(0, dimensions):
                 xvals[i] = neighbors[i]
             
-        z = rastrigin_d(xvals)
-#         z=ackley(x, y)
-#         z=eggholder(x, y)
-#         z=schwefel(x,y)
-#         z = easom(x, y)
-#         z = sphere(x, y)
-#         z = shubert(x, y)
+#         z = rastrigin_d(xvals)
+#         z = ackley_d(xvals)
+        z = schwefel_d(xvals)
+#         z = sphere_d(xvals)
     print(exp)
     results.append(z) #collect accuracy and time results of each algorithm run
     total_time=time.process_time()-start_time
@@ -98,12 +76,12 @@ from xlwt import Workbook
     
 wb = Workbook() 
      
-sheet1 = wb.add_sheet('TA_shubert')
+sheet1 = wb.add_sheet('TA_schwefel4')
 i=0
 for wr in results:
     sheet1.write(i, 0, wr)
     sheet1.write(i, 1, times[i])
     i+=1
         
-wb.save('TA_shubert.xls')
+wb.save('TA_schwefel4.xls')
 print("All saved")

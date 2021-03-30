@@ -9,33 +9,19 @@ times=[]
 results=[]
 A = 10      # rastrigin factor
 final_temp = .01   # final temperature
-b = 0.9999992 # reducing factor of temperature
+b = 0.99999999 # reducing factor of temperature
 neighbor_distance = 1 # the distance that a possible neighbor can have in x or y dimension
-dimensions= 4
+dimensions= 7
 
 low=-5.12 #limits of dimensions that we move around
 up=5.12    #rastrigin
-# low_x=-5      #ackley
-# up_x=5
-# low_y=-5
-# up_y=5
-# low_x=-512    #eggholder
-# up_x=512
-# low_y=-512
-# up_y=512
-# low_x=-500  #schwefel
-# up_x=500
-# low_y=-500
-# up_y=500
-# low_x=-10  #easom#shubert#alpine
-# up_x=10
-# low_y=-10
-# up_y=10
-# low_x=-2  #sphere
-# up_x=2
-# low_y=-2
-# up_y=2
-num_of_iter=10 #number of experiment iterations
+# low=-5      #ackley
+# up=5
+# low=-500  #schwefel
+# up=500
+# low=-2  #sphere
+# up=2
+num_of_iter=1 #number of experiment iterations
 
 for exp in range(0, num_of_iter):
     start_time=time.process_time()
@@ -44,13 +30,10 @@ for exp in range(0, num_of_iter):
     for i in range(0, dimensions):
         xvals.append(random.uniform(low, up))
     
-    z=rastrigin_d(xvals)
-#     z=ackley(x, y)
-#     z=eggholder(x, y)
-#     z = schwefel(x, y)
-#     z = easom(x, y)
-#     z = sphere(x, y)
-#     z = shubert(x, y)
+    z = rastrigin_d(xvals)
+#     z = ackley_d(xvals)
+#     z = schwefel_d(xvals)
+#     z = sphere_d(xvals)
     
     while T>final_temp:
         neighbors=[]
@@ -68,12 +51,9 @@ for exp in range(0, num_of_iter):
             neighbors.append(random.uniform(lower, upper))
     
         DE = z - rastrigin_d(neighbors) #cost difference
-#         DE = ackley(x, y) - ackley(neighbor_x, neighbor_y)
-#         DE = eggholder(x, y) - eggholder(neighbor_x, neighbor_y)
-#         DE = schwefel(x, y) - schwefel(neighbor_x, neighbor_y)
-#         DE = easom(x, y) - easom(neighbor_x, neighbor_y)
-#         DE = sphere(x, y) - sphere(neighbor_x, neighbor_y)
-#         DE = shubert(x, y) - shubert(neighbor_x, neighbor_y)
+#         DE = z - ackley_d(neighbors)
+#         DE = z - schwefel_d(neighbors)
+#         DE = z - sphere_d(neighbors)
 
         if DE > 0:   # if the neighbor is better, accept it
             for i in range(0, dimensions):
@@ -84,12 +64,9 @@ for exp in range(0, num_of_iter):
                     xvals[i] = neighbors[i]
         
         z = rastrigin_d(xvals)
-#         z = ackley(x, y)
-#         z = eggholder(x, y)
-#         z = schwefel(x, y)
-#         z = easom(x, y)
-#         z = sphere(x, y)
-#         z = shubert(x, y)
+#         z = ackley_d(xvals)
+#         z = schwefel_d(xvals)
+#         z = sphere_d(xvals)
         
         T=b*T
         #print("Iteration ",i,": x =",x," y =",y," z =",z)
@@ -104,15 +81,15 @@ print("After",num_of_iter,"iterations of Simulated Annealing it is found that it
 
 import xlwt 
 from xlwt import Workbook 
-        
-wb = Workbook() 
          
-sheet1 = wb.add_sheet('SA_rastrigin5')
+wb = Workbook() 
+          
+sheet1 = wb.add_sheet('SA_rastrigin8')
 i=0
 for wr in results:
     sheet1.write(i, 0, wr)
     sheet1.write(i, 1, times[i])
     i+=1
-            
-wb.save('SA_rastrigin5.xls')
+             
+wb.save('SA_rastrigin8.xls')
 print("All saved")
