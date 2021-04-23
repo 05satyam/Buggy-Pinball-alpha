@@ -78,7 +78,7 @@ def ackley_d(xvals):
     return -20*math.exp(-0.2*math.sqrt((1/len(xvals))*sum1)) - math.exp((1/len(xvals))*sum2) + 20 + math.exp(1)
 #########################################
 def rosenbrock(x, y):
-    return 100*(y - x**2)**2 + (1 - x)**2
+    return 100*(y - x**2)**2 + (x - 1)**2
 
 def rosenbrock_dx(x, y):
     return 400*x**3 + (2 - 400*y)*x - 2
@@ -117,3 +117,39 @@ def alpine(x, y):
 #########################################
 def griewank(x, y):
     return (x**2)/4000 + (y**2)/4000 - (math.cos(x)*math.cos(y)/math.sqrt(2)) + 1
+#########################################
+def holdertable(x, y):
+    return -abs(math.sin(x)*math.cos(y)*math.exp(abs(1 - math.sqrt(x**2 + y**2) / math.pi)))
+#########################################
+def langermann(x, y):
+    m = 5
+    c = [1, 2, 5, 2, 3]
+    A = {
+        0 : {
+            0 : 3,
+            1 : 5            
+            },
+        1 : {
+            0 : 5,
+            1 : 2            
+            },
+        2 : {
+            0 : 2,
+            1 : 1            
+            },
+        3 : {
+            0 : 1,
+            1 : 4            
+            },
+        4 : {
+            0 : 7,
+            1 : 9            
+            }
+        }
+    res = 0
+    for i in range(0, m):
+        res += c[i]*math.exp((-1/math.pi)*((x - A[i][0])**2 + (y - A[i][1])**2))*math.cos(math.pi*((x - A[i][0])**2 + (y - A[i][1])**2))
+    return res
+#########################################
+def dropwave(x, y):
+    return -(1 + math.cos(12*math.sqrt(x**2 + y**2))) / (0.5*(x**2 + y**2) + 2)

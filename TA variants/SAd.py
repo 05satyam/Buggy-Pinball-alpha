@@ -9,7 +9,7 @@ times=[]
 results=[]
 A = 10      # rastrigin factor
 final_temp = .01   # final temperature
-b = 0.99999999 # reducing factor of temperature
+b = 0.999999999 # reducing factor of temperature
 neighbor_distance = 1 # the distance that a possible neighbor can have in x or y dimension
 dimensions= 7
 

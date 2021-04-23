@@ -6,7 +6,7 @@ from functions import *
 import time
 
 # low_x=-5.12    #rastrigin
-# up_x=5.12
+# up_x=5.12      #dropwave
 # low_y=-5.12
 # up_y=5.12
 # A = 10
@@ -17,28 +17,28 @@ import time
 # low_x=-500  #schwefel
 # up_x=500
 # low_y=-500
-# up_y=500 
-# low_x=-50  #griewank
-# up_x=50
-# low_y=-50
-# up_y=50
-# low_x=-10  #easom#shubert#alpine
-# up_x=10
-# low_y=-10
+# up_y=500
+# low_x=-10  #easom
+# up_x=10    #shubert
+# low_y=-10  #holdertable
 # up_y=10
-low_x=-5  #ackley
-up_x=5    
-low_y=-5
-up_y=5
+# low_x=-5  #ackley
+# up_x=5    
+# low_y=-5
+# up_y=5
 # low_x=-2  #sphere
 # up_x=2
 # low_y=-2
 # up_y=2
+low_x=0  #langermann
+up_x=10
+low_y=0
+up_y=10
 
-xvals = np.linspace(low_x, up_x, 300)
-yvals = np.linspace(low_y, up_y, 300)
+# xvals = np.linspace(low_x, up_x, 300)
+# yvals = np.linspace(low_y, up_y, 300)
+# X, Y = np.meshgrid(xvals, yvals)
 
-X, Y = np.meshgrid(xvals, yvals)
 # mc = np.vectorize(rastrigin)
 # Z = mc(X,Y, 10)
 # mc = np.vectorize(eggholder)
@@ -51,24 +51,26 @@ X, Y = np.meshgrid(xvals, yvals)
 # Z = mc(X,Y)
 # mc = np.vectorize(sphere)
 # Z = mc(X,Y)
-mc = np.vectorize(ackley)
-Z = mc(X,Y)
-# mc = np.vectorize(alpine)
+# mc = np.vectorize(ackley)
 # Z = mc(X,Y)
-# mc = np.vectorize(griewank)
+# mc = np.vectorize(holdertable)
 # Z = mc(X,Y)
-
-#plotting the function
-fig = plt.figure()
-ax = plt.axes(projection='3d')
-ax.plot_surface(X, Y, Z, cmap='inferno', alpha=.1)
-ax.set_xlabel('X axis')
-ax.set_ylabel('Y axis')
-ax.set_zlabel('Z axis')
-
-xarr=[]#these arrays are for showing the points in the plot
-yarr=[]
-zarr=[]
+# mc = np.vectorize(dropwave)
+# Z = mc(X,Y)
+# mc = np.vectorize(langermann)
+# Z = mc(X,Y)
+#  
+# #plotting the function
+# fig = plt.figure()
+# ax = plt.axes(projection='3d')
+# ax.plot_surface(X, Y, Z, cmap='inferno', alpha=.2)
+# ax.set_xlabel('X axis')
+# ax.set_ylabel('Y axis')
+# ax.set_zlabel('Z axis')
+#    
+# xarr=[]#these arrays are for showing the points in the plot
+# yarr=[]
+# zarr=[]
             
 #################################functions begin###########################################
 def plotPoint(x, y, z, i, step, color, a):
@@ -82,14 +84,14 @@ def plotPoint(x, y, z, i, step, color, a):
     print("point ",i," (",x,",",y,",",z,") step",step,"angle",a)
 
 #################################functions end############################################
-num_of_iter=1000
+num_of_iter=10
 #define hyper-parameters
-startStep = -.3
+startStep = -.5
 endStep = -.001
-startAngle = 80
-endAngle = 40
-rounds = 370
-numOfSteps = 100
+startAngle = 50
+endAngle = 3
+rounds = 200000
+numOfSteps = 25
 
 times=[]
 results=[]
@@ -103,16 +105,19 @@ for exp in range(0, num_of_iter):
 #     z = easom(x, y)
 #     z = shubert(x, y)
 #     z = sphere(x, y)
-    z = ackley(x, y)
-#     z = alpine(x, y)
-#     z = griewank(x, y)
-                    
+#     z = ackley(x, y)
+#     z = holdertable(x, y)
+#     z = langermann(x, y)
+    z = dropwave(x, y)
+
 #     plotPoint(x, y, z, -1, 0, 'black', -1)
                     
     start_time=time.process_time()
     i=0
     #the actual procedure of the algorithm starts here
     while i<rounds:
+#         if time.process_time()-start_time>=0.5:
+#             break
         #setting direction randomly, but not at a similar direction as the previous vector
         
         xStep = random.uniform(-1, 1)
@@ -149,15 +154,16 @@ for exp in range(0, num_of_iter):
             y = y + yStep
             z = z + step
             
-#             onfunc=rastrigin(x, y, A)
-#             onfunc=eggholder(x, y)
+#             onfunc = rastrigin(x, y, A)
+#             onfunc = eggholder(x, y)
 #             onfunc = schwefel(x, y)
 #             onfunc = easom(x, y)
 #             onfunc = shubert(x, y)
 #             onfunc = sphere(x, y)
-            onfunc = ackley(x, y)
-#             onfunc = alpine(x, y)
-#             onfunc = griewank(x, y)
+#             onfunc = ackley(x, y)
+#             onfunc = holdertable(x, y)
+#             onfunc = langermann(x, y)
+            onfunc = dropwave(x, y)
             
             if firstTime==True:
                 if z < onfunc:
@@ -182,7 +188,7 @@ for exp in range(0, num_of_iter):
                     inYstep = yStep
                     inZstep = step
                     #jump in the middle of the step until crossing point is detected
-                    while abs(z-onfunc)>0.000001 and inZstep>0:
+                    while abs(z-onfunc)>0.000001 and inZstep!=0:
                         inZstep = inZstep/2
                         inXstep = inXstep/2
                         inYstep = inYstep/2
@@ -201,14 +207,14 @@ for exp in range(0, num_of_iter):
 #                         onfunc = easom(x, y)
 #                         onfunc = shubert(x, y)
 #                         onfunc = sphere(x, y)
-                        onfunc = ackley(x, y)   
-#                         onfunc = alpine(x, y)
-#                         onfunc = griewank(x, y)
+#                         onfunc = ackley(x, y)
+#                         onfunc = holdertable(x, y)
+#                         onfunc = langermann(x, y)
+                        onfunc = dropwave(x, y)
                         
                         #if step gets too small, exit because we have a satisfactory accurate solution
                         if inZstep==0:
-                            z=onfunc
-                                            
+                            z=onfunc                
 #                     plotPoint(x, y, z, i, step, 'r', a)
                     break
                 countSteps+=1
@@ -242,14 +248,14 @@ for exp in range(0, num_of_iter):
 #                         onfunc = easom(x, y)
 #                         onfunc = shubert(x, y)
 #                         onfunc = sphere(x, y)
-                        onfunc = ackley(x, y)
-#                         onfunc = alpine(x, y)
-#                         onfunc = griewank(x, y)
+#                         onfunc = ackley(x, y)
+#                         onfunc = holdertable(x, y)
+#                         onfunc = langermann(x, y)
+                        onfunc = dropwave(x, y)
                         
                         #if step gets too small, exit because we have a satisfactory accurate solution
                         if inZstep==0:
-                            z=onfunc
-                                            
+                            z=onfunc                 
 #                     plotPoint(x, y, z, i, step, 'r', a)
                     break
                 countSteps+=1
@@ -265,7 +271,7 @@ for exp in range(0, num_of_iter):
     results.append(z) #collect accuracy and time results of each algorithm run
     total_time=time.process_time()-start_time
     times.append(total_time)
-# plotPoint(x, y, z, i, step, 'green', a)        
+# plotPoint(x, y, z, i, step, 'green', a)
 results_average=sum(results)/len(results) #get an average
 time_average=sum(times)/len(times)
 print("After",num_of_iter,"iterations of variant tr3 it is found that it takes ",time_average," seconds and has a distance of ",results_average, " from the global minimum")
@@ -273,15 +279,15 @@ print("After",num_of_iter,"iterations of variant tr3 it is found that it takes "
 
 import xlwt 
 from xlwt import Workbook 
-        
+             
 wb = Workbook() 
-         
-sheet1 = wb.add_sheet('variantTR3_ackley3')
+              
+sheet1 = wb.add_sheet('variantTR3_langermann_3_secs_8')
 i=0
 for wr in results:
     sheet1.write(i, 0, wr)
     sheet1.write(i, 1, times[i])
     i+=1
-            
-wb.save('variantTR3_ackley3.xls')
+                 
+wb.save('..\..\Results\\variantTR3_langermann_3_secs_8.xls')
 print("All saved")

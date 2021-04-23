@@ -21,14 +21,14 @@ def plotPoint(xvals, cost, i, step, a):
         print(x,",", end =" ")
     print(cost,") step",step,"angle",a)
 #################################functions end############################################
-num_of_iter=1
-dimensions=7 #except cost
+num_of_iter=100
+dimensions=3 #except cost
 #define hyper-parameters
 startStep = -.3
 endStep = -.001
 startAngle = 60
 endAngle = 30
-rounds = 1500000
+rounds = 5000
 numOfSteps = 500
 
 times=[]
@@ -204,12 +204,12 @@ from xlwt import Workbook
         
 wb = Workbook() 
          
-sheet1 = wb.add_sheet('variantTR3_rastrigin8')
+sheet1 = wb.add_sheet('variantTR3_rastrigin4')
 i=0
 for wr in results:
     sheet1.write(i, 0, wr)
     sheet1.write(i, 1, times[i])
     i+=1
             
-wb.save('variantTR3_rastrigin8.xls')
+wb.save('variantTR3_rastrigin4.xls')
 print("All saved")
