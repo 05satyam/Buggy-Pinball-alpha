@@ -3,6 +3,12 @@ import math
 def sphere(x, y):   # limits -inf <= x,y <= inf
     return x ** 2 + y ** 2
  
+def sphere_d(xvals):
+    result = 0
+    for x in xvals:
+        result += x**2
+    return result
+ 
 def sphere_dx(x, y):
     return 2*x
 
@@ -20,6 +26,12 @@ def booth_dy(x, y):
 #########################################
 def rastrigin(x, y, A):   # limits -5.12 <= x,y <= 5.12
     return 2*A + x**2 - A*math.cos(2*math.pi*x) + y**2 - A*math.cos(2*math.pi*y)
+
+def rastrigin_d(xvals):
+    result = len(xvals)*10
+    for x in xvals:
+        result += x**2 - 10*math.cos(2*math.pi*x)
+    return result
 
 def rastrigin_dx(x, y, A):
     return 2*x + 2*math.pi*A*math.sin(2*math.pi*x)
@@ -56,9 +68,17 @@ def eggholder_dy(x, y):
 #########################################
 def ackley(x, y):
     return -20*math.exp(-0.2*math.sqrt(0.5*(x**2 + y**2))) - math.exp(0.5*(math.cos(2*math.pi*x) + math.cos(2*math.pi*y))) + math.e + 20
+
+def ackley_d(xvals):
+    sum1 = 0
+    sum2 = 0
+    for x in xvals:
+        sum1 += x**2
+        sum2 += math.cos(2*math.pi*x)
+    return -20*math.exp(-0.2*math.sqrt((1/len(xvals))*sum1)) - math.exp((1/len(xvals))*sum2) + 20 + math.exp(1)
 #########################################
 def rosenbrock(x, y):
-    return 100*(y - x**2)**2 + (1 - x)**2
+    return 100*(y - x**2)**2 + (x - 1)**2
 
 def rosenbrock_dx(x, y):
     return 400*x**3 + (2 - 400*y)*x - 2
@@ -74,6 +94,12 @@ def goldsteinPrince_dx(x, y):
 #########################################
 def schwefel(x, y):     # limits -500 <= x <= 500, -512 <= y <= 500
     return 418.9829*2 - x*math.sin(math.sqrt(abs(x))) - y*math.sin(math.sqrt(abs(y)))
+
+def schwefel_d(xvals):
+    result = len(xvals)*418.9829
+    for x in xvals:
+        result += x*math.sin(math.sqrt(abs(x)))
+    return result 
 #########################################
 def easom(x, y):        # limits -10 <= x <= 10, -10 <= y <= 10
     return -math.cos(x)*math.cos(y)*math.exp(-((x - math.pi)**2 + (y - math.pi)**2))
@@ -88,3 +114,42 @@ def shubert(x, y):
 #########################################
 def alpine(x, y):
     return abs(x*math.sin(x) + 0.1*x) + abs(y*math.sin(y) + 0.1*y)
+#########################################
+def griewank(x, y):
+    return (x**2)/4000 + (y**2)/4000 - (math.cos(x)*math.cos(y)/math.sqrt(2)) + 1
+#########################################
+def holdertable(x, y):
+    return -abs(math.sin(x)*math.cos(y)*math.exp(abs(1 - math.sqrt(x**2 + y**2) / math.pi)))
+#########################################
+def langermann(x, y):
+    m = 5
+    c = [1, 2, 5, 2, 3]
+    A = {
+        0 : {
+            0 : 3,
+            1 : 5            
+            },
+        1 : {
+            0 : 5,
+            1 : 2            
+            },
+        2 : {
+            0 : 2,
+            1 : 1            
+            },
+        3 : {
+            0 : 1,
+            1 : 4            
+            },
+        4 : {
+            0 : 7,
+            1 : 9            
+            }
+        }
+    res = 0
+    for i in range(0, m):
+        res += c[i]*math.exp((-1/math.pi)*((x - A[i][0])**2 + (y - A[i][1])**2))*math.cos(math.pi*((x - A[i][0])**2 + (y - A[i][1])**2))
+    return res
+#########################################
+def dropwave(x, y):
+    return -(1 + math.cos(12*math.sqrt(x**2 + y**2))) / (0.5*(x**2 + y**2) + 2)

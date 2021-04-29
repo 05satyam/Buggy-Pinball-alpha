@@ -84,13 +84,13 @@ def plotPoint(x, y, z, i, step, color, a):
     print("point ",i," (",x,",",y,",",z,") step",step,"angle",a)
 
 #################################functions end############################################
-num_of_iter=10
+num_of_iter=100
 #define hyper-parameters
-startStep = -.5
-endStep = -.001
-startAngle = 50
-endAngle = 3
-rounds = 200000
+startStep = -1
+endStep = -.0001
+startAngle = .1
+endAngle = 1
+rounds = 60
 numOfSteps = 25
 
 times=[]
@@ -162,8 +162,8 @@ for exp in range(0, num_of_iter):
 #             onfunc = sphere(x, y)
 #             onfunc = ackley(x, y)
 #             onfunc = holdertable(x, y)
-#             onfunc = langermann(x, y)
-            onfunc = dropwave(x, y)
+            onfunc = langermann(x, y)
+#             onfunc = dropwave(x, y)
             
             if firstTime==True:
                 if z < onfunc:
@@ -209,8 +209,8 @@ for exp in range(0, num_of_iter):
 #                         onfunc = sphere(x, y)
 #                         onfunc = ackley(x, y)
 #                         onfunc = holdertable(x, y)
-#                         onfunc = langermann(x, y)
-                        onfunc = dropwave(x, y)
+                        onfunc = langermann(x, y)
+#                         onfunc = dropwave(x, y)
                         
                         #if step gets too small, exit because we have a satisfactory accurate solution
                         if inZstep==0:
@@ -250,8 +250,8 @@ for exp in range(0, num_of_iter):
 #                         onfunc = sphere(x, y)
 #                         onfunc = ackley(x, y)
 #                         onfunc = holdertable(x, y)
-#                         onfunc = langermann(x, y)
-                        onfunc = dropwave(x, y)
+                        onfunc = langermann(x, y)
+#                         onfunc = dropwave(x, y)
                         
                         #if step gets too small, exit because we have a satisfactory accurate solution
                         if inZstep==0:
@@ -277,17 +277,17 @@ time_average=sum(times)/len(times)
 print("After",num_of_iter,"iterations of variant tr3 it is found that it takes ",time_average," seconds and has a distance of ",results_average, " from the global minimum")
 # plt.show()
 
-import xlwt 
-from xlwt import Workbook 
-             
-wb = Workbook() 
-              
-sheet1 = wb.add_sheet('variantTR3_langermann_3_secs_8')
-i=0
-for wr in results:
-    sheet1.write(i, 0, wr)
-    sheet1.write(i, 1, times[i])
-    i+=1
-                 
-wb.save('..\..\Results\\variantTR3_langermann_3_secs_8.xls')
-print("All saved")
+# import xlwt 
+# from xlwt import Workbook 
+#              
+# wb = Workbook() 
+#               
+# sheet1 = wb.add_sheet('variantTR3_langermann_3_secs_8')
+# i=0
+# for wr in results:
+#     sheet1.write(i, 0, wr)
+#     sheet1.write(i, 1, times[i])
+#     i+=1
+#                  
+# wb.save('..\..\Results\\variantTR3_langermann_3_secs_8.xls')
+# print("All saved")
