@@ -9,11 +9,11 @@ import time
 # up_x=5.12      #dropwave
 # low_y=-5.12
 # up_y=5.12
-# A = 10
-# low_x=-512  #eggholder
-# up_x=512
-# low_y=-512
-# up_y=512
+A = 10
+low_x=-512  #eggholder
+up_x=512
+low_y=-512
+up_y=512
 # low_x=-500  #schwefel
 # up_x=500
 # low_y=-500
@@ -30,17 +30,17 @@ import time
 # up_x=2
 # low_y=-2
 # up_y=2
-low_x=0  #langermann
-up_x=10
-low_y=0
-up_y=10
+# low_x=0  #langermann
+# up_x=10
+# low_y=0
+# up_y=10
 
-# xvals = np.linspace(low_x, up_x, 300)
-# yvals = np.linspace(low_y, up_y, 300)
-# X, Y = np.meshgrid(xvals, yvals)
+xvals = np.linspace(low_x, up_x, 300)
+yvals = np.linspace(low_y, up_y, 300)
+X, Y = np.meshgrid(xvals, yvals)
 
-# mc = np.vectorize(rastrigin)
-# Z = mc(X,Y, 10)
+mc = np.vectorize(rastrigin)
+Z = mc(X,Y, 10)
 # mc = np.vectorize(eggholder)
 # Z = mc(X,Y)
 # mc = np.vectorize(schwefel)
@@ -61,16 +61,16 @@ up_y=10
 # Z = mc(X,Y)
 #  
 # #plotting the function
-# fig = plt.figure()
-# ax = plt.axes(projection='3d')
-# ax.plot_surface(X, Y, Z, cmap='inferno', alpha=.2)
-# ax.set_xlabel('X axis')
-# ax.set_ylabel('Y axis')
-# ax.set_zlabel('Z axis')
-#    
-# xarr=[]#these arrays are for showing the points in the plot
-# yarr=[]
-# zarr=[]
+fig = plt.figure()
+ax = plt.axes(projection='3d')
+ax.plot_surface(X, Y, Z, cmap='inferno', alpha=.2)
+ax.set_xlabel('X axis')
+ax.set_ylabel('Y axis')
+ax.set_zlabel('Z axis')
+    
+xarr=[]#these arrays are for showing the points in the plot
+yarr=[]
+zarr=[]
             
 #################################functions begin###########################################
 def plotPoint(x, y, z, i, step, color, a):
@@ -84,13 +84,13 @@ def plotPoint(x, y, z, i, step, color, a):
     print("point ",i," (",x,",",y,",",z,") step",step,"angle",a)
 
 #################################functions end############################################
-num_of_iter=100
+num_of_iter=1
 #define hyper-parameters
-startStep = -1
+startStep = -500
 endStep = -.0001
-startAngle = .1
-endAngle = 1
-rounds = 60
+startAngle = 10
+endAngle = 40
+rounds = 10000
 numOfSteps = 25
 
 times=[]
@@ -99,7 +99,7 @@ for exp in range(0, num_of_iter):
     #get random initial point
     x = random.uniform(low_x, up_x)
     y = random.uniform(low_y, up_y)
-#     z = rastrigin(x, y, A)
+    z = rastrigin(x, y, A)
 #     z = eggholder(x, y)
 #     z = schwefel(x, y)
 #     z = easom(x, y)
@@ -108,9 +108,9 @@ for exp in range(0, num_of_iter):
 #     z = ackley(x, y)
 #     z = holdertable(x, y)
 #     z = langermann(x, y)
-    z = dropwave(x, y)
+#     z = dropwave(x, y)
 
-#     plotPoint(x, y, z, -1, 0, 'black', -1)
+    plotPoint(x, y, z, -1, 0, 'black', -1)
                     
     start_time=time.process_time()
     i=0
@@ -154,7 +154,7 @@ for exp in range(0, num_of_iter):
             y = y + yStep
             z = z + step
             
-#             onfunc = rastrigin(x, y, A)
+            onfunc = rastrigin(x, y, A)
 #             onfunc = eggholder(x, y)
 #             onfunc = schwefel(x, y)
 #             onfunc = easom(x, y)
@@ -162,7 +162,7 @@ for exp in range(0, num_of_iter):
 #             onfunc = sphere(x, y)
 #             onfunc = ackley(x, y)
 #             onfunc = holdertable(x, y)
-            onfunc = langermann(x, y)
+#             onfunc = langermann(x, y)
 #             onfunc = dropwave(x, y)
             
             if firstTime==True:
@@ -180,7 +180,7 @@ for exp in range(0, num_of_iter):
             if isUnderneath==False:
                 # if the line crosses the function stop
                 if abs(z-onfunc)<0.000001:# this means z-onfunc==0
-#                     plotPoint(x, y, z, i, step, 'r', a)
+                    plotPoint(x, y, z, i, step, 'r', a)
                     break
                 # if the line is underneath the function, find the point crossing
                 elif z<onfunc:
@@ -201,7 +201,7 @@ for exp in range(0, num_of_iter):
                             y = y-inYstep
                             z = z-inZstep
                         
-#                         onfunc = rastrigin(x, y, A)
+                        onfunc = rastrigin(x, y, A)
 #                         onfunc = eggholder(x, y)
 #                         onfunc = schwefel(x, y)
 #                         onfunc = easom(x, y)
@@ -209,19 +209,19 @@ for exp in range(0, num_of_iter):
 #                         onfunc = sphere(x, y)
 #                         onfunc = ackley(x, y)
 #                         onfunc = holdertable(x, y)
-                        onfunc = langermann(x, y)
+#                         onfunc = langermann(x, y)
 #                         onfunc = dropwave(x, y)
                         
                         #if step gets too small, exit because we have a satisfactory accurate solution
                         if inZstep==0:
                             z=onfunc                
-#                     plotPoint(x, y, z, i, step, 'r', a)
+                    plotPoint(x, y, z, i, step, 'r', a)
                     break
                 countSteps+=1
             else:
                 # if the line crosses the function stop
                 if abs(z-onfunc)<0.000001:# this means z-onfunc==0
-#                     plotPoint(x, y, z, i, step, 'r', a)
+                    plotPoint(x, y, z, i, step, 'r', a)
                     break
                 # if the line is over the function, find the point crossing
                 elif z>onfunc:
@@ -242,7 +242,7 @@ for exp in range(0, num_of_iter):
                             y = y-inYstep
                             z = z-inZstep
                         
-#                         onfunc = rastrigin(x, y, A)
+                        onfunc = rastrigin(x, y, A)
 #                         onfunc = eggholder(x, y)
 #                         onfunc = schwefel(x, y)
 #                         onfunc = easom(x, y)
@@ -250,13 +250,13 @@ for exp in range(0, num_of_iter):
 #                         onfunc = sphere(x, y)
 #                         onfunc = ackley(x, y)
 #                         onfunc = holdertable(x, y)
-                        onfunc = langermann(x, y)
+#                         onfunc = langermann(x, y)
 #                         onfunc = dropwave(x, y)
                         
                         #if step gets too small, exit because we have a satisfactory accurate solution
                         if inZstep==0:
                             z=onfunc                 
-#                     plotPoint(x, y, z, i, step, 'r', a)
+                    plotPoint(x, y, z, i, step, 'r', a)
                     break
                 countSteps+=1
         i=i+1
@@ -267,15 +267,15 @@ for exp in range(0, num_of_iter):
             z = z - countSteps*step
                         
     print(exp)
-#     ax.plot(xarr, yarr, zarr, color='b')    #connecting the points
+    ax.plot(xarr, yarr, zarr, color='b')    #connecting the points
     results.append(z) #collect accuracy and time results of each algorithm run
     total_time=time.process_time()-start_time
     times.append(total_time)
-# plotPoint(x, y, z, i, step, 'green', a)
+plotPoint(x, y, z, i, step, 'green', a)
 results_average=sum(results)/len(results) #get an average
 time_average=sum(times)/len(times)
 print("After",num_of_iter,"iterations of variant tr3 it is found that it takes ",time_average," seconds and has a distance of ",results_average, " from the global minimum")
-# plt.show()
+plt.show()
 
 # import xlwt 
 # from xlwt import Workbook 

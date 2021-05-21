@@ -8,9 +8,9 @@ from functions import *
 times=[]
 results=[]
 A = 10      # rastrigin factor
-init_T = 1             # initial threshold
-rounds = 430000           # number of parts that the threshold sequence will contain
-neighbor_distance = 4   # the distance that a possible neighbor can have in x or y dimension
+init_T = 800             # initial threshold
+rounds = 26400           # number of parts that the threshold sequence will contain
+neighbor_distance = 300   # the distance that a possible neighbor can have in x or y dimension
 T = np.linspace(init_T, 0, rounds)  #all threshold values for the TA
 num_of_iter=100 #number of experiment iterations
 
@@ -26,10 +26,10 @@ num_of_iter=100 #number of experiment iterations
 # up_x=512    #eggholder
 # low_y=-512
 # up_y=512
-# low_x=-500  #schwefel
-# up_x=500
-# low_y=-500
-# up_y=500
+low_x=-500  #schwefel
+up_x=500
+low_y=-500
+up_y=500
 # low_x=-10  #easom#shubert#holdertable
 # up_x=10
 # low_y=-10
@@ -38,10 +38,10 @@ num_of_iter=100 #number of experiment iterations
 # up_x=2
 # low_y=-2
 # up_y=2
-low_x=0  #langermann
-up_x=10
-low_y=0
-up_y=10
+# low_x=0  #langermann
+# up_x=10
+# low_y=0
+# up_y=10
 
 for exp in range(0, num_of_iter):
     x = random.uniform(low_x, up_x) # initial solutions
@@ -49,13 +49,13 @@ for exp in range(0, num_of_iter):
 #     z=rastrigin(x, y, A)
 #     z=ackley(x, y)
 #     z=eggholder(x, y)
-#     z=schwefel(x,y)
+    z=schwefel(x,y)
 #     z = easom(x, y)
 #     z = sphere(x, y)
 #     z = shubert(x, y)
 #     z=holdertable(x, y)
 #     z = dropwave(x, y)
-    z = langermann(x, y)
+#     z = langermann(x, y)
     
     start_time=time.process_time()
     
@@ -88,13 +88,13 @@ for exp in range(0, num_of_iter):
 #         DE = z - rastrigin(neighbor_x, neighbor_y, A) #cost difference
 #         DE = ackley(x, y) - ackley(neighbor_x, neighbor_y)
 #         DE = eggholder(x, y) - eggholder(neighbor_x, neighbor_y)
-#         DE = schwefel(x, y) - schwefel(neighbor_x, neighbor_y)
+        DE = schwefel(x, y) - schwefel(neighbor_x, neighbor_y)
 #         DE = easom(x, y) - easom(neighbor_x, neighbor_y)
 #         DE = sphere(x, y) - sphere(neighbor_x, neighbor_y)
 #         DE = shubert(x, y) - shubert(neighbor_x, neighbor_y)
 #         DE = holdertable(x, y) - holdertable(neighbor_x, neighbor_y)
 #         DE = dropwave(x, y) - dropwave(neighbor_x, neighbor_y)
-        DE = langermann(x, y) - langermann(neighbor_x, neighbor_y)
+#         DE = langermann(x, y) - langermann(neighbor_x, neighbor_y)
         
         if DE > -t:    # if the new solution is better, accept it
             x = neighbor_x
@@ -103,13 +103,13 @@ for exp in range(0, num_of_iter):
 #         z=rastrigin(x, y, A)
 #         z=ackley(x, y)
 #         z=eggholder(x, y)
-#         z = schwefel(x,y)
+        z = schwefel(x,y)
 #         z = easom(x, y)
 #         z = sphere(x, y)
 #         z = shubert(x, y)
 #         z=holdertable(x, y)
 #         z = dropwave(x, y)
-        z = langermann(x, y)
+#         z = langermann(x, y)
 
     print(exp)
     
@@ -126,12 +126,12 @@ from xlwt import Workbook
      
 wb = Workbook() 
       
-sheet1 = wb.add_sheet('TA_langermann_3_secs_7')
+sheet1 = wb.add_sheet('file')
 i=0
 for wr in results:
     sheet1.write(i, 0, wr)
     sheet1.write(i, 1, times[i])
     i+=1
          
-wb.save('..\..\Results\TA_langermann_3_secs_7.xls')
+wb.save('..\..\Results\TA_schwefel_3_secs_2.xls')
 print("All saved")

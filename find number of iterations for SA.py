@@ -4,9 +4,10 @@ import numpy as np
 import random
 from functions import *
 
-T=10
+T=.0001
 i=0
-while T>0.01:
-    T=T/(1+0.04164*T)
+b=0.99999955
+while T>0.000001:
+    T=b*T
     i+=1
 print(i)

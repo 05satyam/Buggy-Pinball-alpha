@@ -21,9 +21,9 @@ up=10    #shubert
 # low=0  #langermann
 # up=10
 
-xvals = np.linspace(low, up, 300)
-yvals = np.linspace(low, up, 300)
-X, Y = np.meshgrid(xvals, yvals)
+# xvals = np.linspace(low, up, 300)
+# yvals = np.linspace(low, up, 300)
+# X, Y = np.meshgrid(xvals, yvals)
 
 # mc = np.vectorize(rastrigin)
 # Z = mc(X,Y, 10)
@@ -39,24 +39,24 @@ X, Y = np.meshgrid(xvals, yvals)
 # Z = mc(X,Y)
 # mc = np.vectorize(ackley)
 # Z = mc(X,Y)
-mc = np.vectorize(holdertable)
-Z = mc(X,Y)
+# mc = np.vectorize(holdertable)
+# Z = mc(X,Y)
 # mc = np.vectorize(dropwave)
 # Z = mc(X,Y)
 # mc = np.vectorize(langermann)
 # Z = mc(X,Y)
   
 #plotting the function
-fig = plt.figure()
-ax = plt.axes(projection='3d')
-ax.plot_surface(X, Y, Z, cmap='inferno', alpha=.2)
-ax.set_xlabel('X axis')
-ax.set_ylabel('Y axis')
-ax.set_zlabel('Z axis')
-    
-xarr=[]#these arrays are for showing the points in the plot
-yarr=[]
-zarr=[]
+# fig = plt.figure()
+# ax = plt.axes(projection='3d')
+# ax.plot_surface(X, Y, Z, cmap='inferno', alpha=.1)
+# ax.set_xlabel('X1 axis')
+# ax.set_ylabel('X2 axis')
+# ax.set_zlabel('Y axis')
+#     
+# xarr=[]#these arrays are for showing the points in the plot
+# yarr=[]
+# zarr=[]
             
 #################################functions begin###########################################
 def plotPoint(x, y, z, i, step, color, a):
@@ -75,25 +75,26 @@ num_of_iter=100
 startResultant = -.5
 endResultant = -.0001
 startAngle = 1
-endAngle = 89
-rounds = 90000
-numOfSteps = 10
+endAngle = 45
+rounds = 168000
+numOfSteps = 20
 
 times=[]
 results=[]
-for exp in range(0, num_of_iter):
+exp=0
+while exp<num_of_iter:
     #get random initial point
     x, y = random.uniform(low, up), random.uniform(low, up)
 #     z = rastrigin(x, y, A)
-#     z = eggholder(x, y)
+#     z = eggholder1(x, y)
 #     z = schwefel(x, y)
-#     z = easom(x, y)
-#     z = shubert(x, y)
+#     z = easom1(x, y)
+#     z = shubert1(x, y)
 #     z = sphere(x, y)
 #     z = ackley(x, y)
-    z = holdertable(x, y)
-#     z = langermann(x, y)
-#     z = dropwave(x, y)
+    z = holdertable1(x, y)
+#     z = langermann1(x, y)
+#     z = dropwave1(x, y)
 
 #     plotPoint(x, y, z, -1, 0, 'black', -1)
                     
@@ -118,15 +119,15 @@ for exp in range(0, num_of_iter):
         countSteps = 0
         x_cur, y_cur, z_cur = x + xStep, y + yStep, z + zStep
 #         onfunc = rastrigin(x_cur, y_cur, A)
-#         onfunc = eggholder(x_cur, y_cur)
+#         onfunc = eggholder1(x_cur, y_cur)
 #         onfunc = schwefel(x_cur, y_cur)
-#         onfunc = easom(x_cur, y_cur)
-#         onfunc = shubert(x_cur, y_cur)
+#         onfunc = easom1(x_cur, y_cur)
+#         onfunc = shubert1(x_cur, y_cur)
 #         onfunc = sphere(x_cur, y_cur)
 #         onfunc = ackley(x_cur, y_cur)
-        onfunc = holdertable(x_cur, y_cur)
-#         onfunc = langermann(x_cur, y_cur)
-#         onfunc = dropwave(x_cur, y_cur)
+        onfunc = holdertable1(x_cur, y_cur)
+#         onfunc = langermann1(x_cur, y_cur)
+#         onfunc = dropwave1(x_cur, y_cur)
         if z_cur < onfunc:
             isUnderneath = True
         else:
@@ -149,15 +150,15 @@ for exp in range(0, num_of_iter):
                             x_cur, y_cur, z_cur = x_cur - inXstep, y_cur - inYstep, z_cur - inZstep
                         
 #                         onfunc = rastrigin(x_cur, y_cur, A)
-#                         onfunc = eggholder(x_cur, y_cur)
+#                         onfunc = eggholder1(x_cur, y_cur)
 #                         onfunc = schwefel(x_cur, y_cur)
-#                         onfunc = easom(x_cur, y_cur)
-#                         onfunc = shubert(x_cur, y_cur)
-                        onfunc = sphere(x_cur, y_cur)
+#                         onfunc = easom1(x_cur, y_cur)
+#                         onfunc = shubert1(x_cur, y_cur)
+#                         onfunc = sphere(x_cur, y_cur)
 #                         onfunc = ackley(x_cur, y_cur)
-#                         onfunc = holdertable(x_cur, y_cur)
-#                         onfunc = langermann(x_cur, y_cur)
-#                         onfunc = dropwave(x_cur, y_cur)
+                        onfunc = holdertable1(x_cur, y_cur)
+#                         onfunc = langermann1(x_cur, y_cur)
+#                         onfunc = dropwave1(x_cur, y_cur)
                         
                         #if step gets too small, exit because we have a satisfactory accurate solution
                         if inZstep==0:
@@ -178,15 +179,15 @@ for exp in range(0, num_of_iter):
                             x_cur, y_cur, z_cur = x_cur - inXstep, y_cur - inYstep, z_cur - inZstep
                         
 #                         onfunc = rastrigin(x_cur, y_cur, A)
-#                         onfunc = eggholder(x_cur, y_cur)
+#                         onfunc = eggholder1(x_cur, y_cur)
 #                         onfunc = schwefel(x_cur, y_cur)
-#                         onfunc = easom(x_cur, y_cur)
-#                         onfunc = shubert(x_cur, y_cur)
-                        onfunc = sphere(x_cur, y_cur)
+#                         onfunc = easom1(x_cur, y_cur)
+#                         onfunc = shubert1(x_cur, y_cur)
+#                         onfunc = sphere(x_cur, y_cur)
 #                         onfunc = ackley(x_cur, y_cur)
-#                         onfunc = holdertable(x_cur, y_cur)
-#                         onfunc = langermann(x_cur, y_cur)
-#                         onfunc = dropwave(x_cur, y_cur)
+                        onfunc = holdertable1(x_cur, y_cur)
+#                         onfunc = langermann1(x_cur, y_cur)
+#                         onfunc = dropwave1(x_cur, y_cur)
                         
                         #if step gets too small, exit because we have a satisfactory accurate solution
                         if inZstep==0:
@@ -197,21 +198,23 @@ for exp in range(0, num_of_iter):
             countSteps+=1
             x_cur, y_cur, z_cur = x_cur + xStep, y_cur + yStep, z_cur + zStep
 #             onfunc = rastrigin(x_cur, y_cur, A)
-#             onfunc = eggholder(x_cur, y_cur)
+#             onfunc = eggholder1(x_cur, y_cur)
 #             onfunc = schwefel(x_cur, y_cur)
-#             onfunc = easom(x_cur, y_cur)
-#             onfunc = shubert(x_cur, y_cur)
-            onfunc = sphere(x_cur, y_cur)
+#             onfunc = easom1(x_cur, y_cur)
+#             onfunc = shubert1(x_cur, y_cur)
+#             onfunc = sphere(x_cur, y_cur)
 #             onfunc = ackley(x_cur, y_cur)
-#             onfunc = holdertable(x_cur, y_cur)
-#             onfunc = langermann(x_cur, y_cur)
-#             onfunc = dropwave(x_cur, y_cur)
+            onfunc = holdertable1(x_cur, y_cur)
+#             onfunc = langermann1(x_cur, y_cur)
+#             onfunc = dropwave1(x_cur, y_cur)
         i=i+1
     print(exp)
 #     ax.plot(xarr, yarr, zarr, color='b')    #connecting the points
-    results.append(z) #collect accuracy and time results of each algorithm run
     total_time=time.process_time()-start_time
+#     if total_time<2:
+    results.append(z) #collect accuracy and time results of each algorithm run
     times.append(total_time)
+    exp+=1
 # plotPoint(x, y, z, i, resultant, 'green', a)
 results_average=sum(results)/len(results) #get an average
 time_average=sum(times)/len(times)
@@ -220,15 +223,15 @@ print("After",num_of_iter,"iterations of variant tr3 it is found that it takes "
 
 import xlwt 
 from xlwt import Workbook 
-                    
+                       
 wb = Workbook() 
-                     
-sheet1 = wb.add_sheet('variantTR4_sphere_3_secs_4')
+                        
+sheet1 = wb.add_sheet('file')
 i=0
 for wr in results:
     sheet1.write(i, 0, wr)
     sheet1.write(i, 1, times[i])
     i+=1
-                        
-wb.save('..\..\Results\\variantTR4_sphere_3_secs_4.xls')
+                           
+wb.save('..\..\Results\\variantTR4_holdertable_3_secs_7.xls')
 print("All saved")
