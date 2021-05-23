@@ -9,16 +9,16 @@ times=[]
 results=[]
 A = 10      # rastrigin factor
 final_temp = 0.01   # final temperature
-b = 0.9999996  # reducing factor of temperature
-neighbor_distance = 1 # the distance that a possible neighbor can have in x or y dimension
-dimensions= 9
+b = 0.99999825  # reducing factor of temperature
+neighbor_distance = 200 # the distance that a possible neighbor can have in x or y dimension
+dimensions= 3
 
-low=-5.12    #rastrigin
-up=5.12      #dropwave
+# low=-5.12    #rastrigin
+# up=5.12      #dropwave
 # low=-512  #eggholder
 # up=512
-# low=-500  #schwefel
-# up=500
+low=-500  #schwefel
+up=500
 # low=-10  #easom#holdertable
 # up=10    #shubert
 # low=-5  #ackley
@@ -32,14 +32,14 @@ num_of_iter=100 #number of experiment iterations
 exp=0
 while exp<num_of_iter:
     start_time=time.process_time()
-    T = 10 # starting temperature
+    T = 100 # starting temperature
     xvals=[]
     for i in range(0, dimensions):
         xvals.append(random.uniform(low, up))
     
-    z = rastrigin_d(xvals)
+#     z = rastrigin_d(xvals)
 #     z = ackley_d(xvals)
-#     z = schwefel_d(xvals)
+    z = schwefel_d(xvals)
 #     z = sphere_d(xvals)
 #     z = easom(xvals)
 #     z = shubert(xvals)
@@ -63,9 +63,9 @@ while exp<num_of_iter:
             
             neighbors.append(random.uniform(lower, upper))
     
-        DE = z - rastrigin_d(neighbors) #cost difference
+#         DE = z - rastrigin_d(neighbors) #cost difference
 #         DE = z - ackley_d(neighbors)
-#         DE = z - schwefel_d(neighbors)
+        DE = z - schwefel_d(neighbors)
 #         DE = z - sphere_d(neighbors)
 #         DE = z - easom(neighbors)
 #         DE = z - shubert(neighbors)
@@ -82,9 +82,9 @@ while exp<num_of_iter:
                 for i in range(0, dimensions):
                     xvals[i] = neighbors[i]
         
-        z = rastrigin_d(xvals)
+#         z = rastrigin_d(xvals)
 #         z = ackley_d(xvals)
-#         z = schwefel_d(xvals)
+        z = schwefel_d(xvals)
 #         z = sphere_d(xvals)
 #         z = easom(xvals)
 #         z = shubert(xvals)
@@ -118,5 +118,5 @@ for wr in results:
     sheet1.write(i, 1, times[i])
     i+=1
              
-wb.save('SA_rastrigin_10_secs.xls')
+wb.save('..\Results\\SA_schwefel_4_secs.xls')
 print("All saved")

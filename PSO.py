@@ -122,8 +122,8 @@ up=500
 # up=2
 # low=0  #langermann
 # up=10
-num_of_iter=31
-dimensions= 4
+num_of_iter=100
+dimensions= 3
 
 exp=0
 while exp<num_of_iter:
@@ -133,15 +133,15 @@ while exp<num_of_iter:
     for i in range(0, dimensions):
         initial.append(random.uniform(low, up))
         bounds.append([low, up])
-    PSO(schwefel_d,initial,bounds,num_particles=2000,maxiter=4600)
+    PSO(schwefel_d,initial,bounds,num_particles=1000,maxiter=5300)
     
     print(exp)
     total_time=time.process_time()-start_time
-    if total_time>60:
-        times.append(total_time)
-        exp+=1
-    else:
-        results.pop(len(results)-1)
+#     if total_time>60:
+    times.append(total_time)
+    exp+=1
+#     else:
+#         results.pop(len(results)-1)
 
 results_average=sum(results)/len(results) #get an average
 time_average=sum(times)/len(times)
@@ -160,5 +160,5 @@ for wr in results:
     sheet1.write(i, 1, times[i])
     i+=1
           
-wb.save('..\..\Results\\PSO_schwefel_5_secswde.xls')
+wb.save('..\Results\\PSO_schwefel_4_secs.xls')
 print("All saved")

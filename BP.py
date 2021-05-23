@@ -204,5 +204,5 @@ for wr in results:
     sheet1.write(i, 1, times[i])
     i+=1
 
-wb.save('..\..\Results\\variantTR4_schwefel_6_secs.xls')
+wb.save('..\Results\\variantTR4_schwefel_6_secs.xls')
 print("All saved")

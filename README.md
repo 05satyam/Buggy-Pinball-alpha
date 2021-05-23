@@ -1,22 +1,14 @@
-SIMULATED ANNEALING PROJECT
+BUGGY PINBALL PROJECT
 
 functions.py contains all optimization problems implemented so far.
-For 3D representation of optimization functions use test.py code.
+For 3D representation of buggy pinball the variant_tr3_4.py file can be used within TA variants folder.
 
-Versions of TA variants implemented:
+Algorithms implemented and ready for multiple iterations and storage of results:
 
-N = neighborhood linear decay
+- Simulated Annealing (SA.py)
 
-Tl = threshold logarithmic decay
+- Threshold Accepting (TA.py)
 
-Tc = threshold cosine decay
+- Particle Swarm Optimization (PSO.py)
 
-Te = threshold exponential decay
-
-tr = trajectory search
-
-tr2 = new trajectory search (line-function intersection)
-
-tr3 = stepwise trajectory search (with z dimension descent and line-function intersection)
-
-grid = search n points, go to the best, and continue with TA
+-Buggy Pinball (BP.py)

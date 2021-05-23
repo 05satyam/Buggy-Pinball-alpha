@@ -7,18 +7,18 @@ from functions import *
 times=[]
 results=[]
 A = 10      # rastrigin factor
-init_T = 1          # initial threshold
-rounds = 462000          # number of parts that the threshold sequence will contain
-neighbor_distance = 1   # the distance that a possible neighbor can have in x or y dimension
+init_T = 800          # initial threshold
+rounds = 5400000          # number of parts that the threshold sequence will contain
+neighbor_distance = 300   # the distance that a possible neighbor can have in x or y dimension
 T = np.linspace(init_T, 0, rounds)  #all threshold values for the TA
-dimensions= 9
+dimensions= 3   #only the variables of the objective function
 
-low=-5.12    #rastrigin
-up=5.12      #dropwave
+# low=-5.12    #rastrigin
+# up=5.12      #dropwave
 # low=-512  #eggholder
 # up=512
-# low=-500  #schwefel
-# up=500
+low=-500  #schwefel
+up=500
 # low=-10  #easom#holdertable
 # up=10    #shubert
 # low=-5  #ackley
@@ -35,9 +35,9 @@ while exp<num_of_iter:
     xvals=[]
     for i in range(0, dimensions):
         xvals.append(random.uniform(low, up))
-    z = rastrigin_d(xvals)
+#     z = rastrigin_d(xvals)
 #     z = ackley_d(xvals)
-#     z = schwefel_d(xvals)
+    z = schwefel_d(xvals)
 #     z = sphere_d(xvals)
 #     z = easom(xvals)
 #     z = shubert(xvals)
@@ -61,10 +61,10 @@ while exp<num_of_iter:
             else:
                 upper = up
             neighbors.append(random.uniform(lower, upper))
-            
-        DE = z - rastrigin_d(neighbors) #cost difference
+             
+#         DE = z - rastrigin_d(neighbors) #cost difference
 #         DE = z - ackley_d(neighbors)
-#         DE = z - schwefel_d(neighbors)
+        DE = z - schwefel_d(neighbors)
 #         DE = z - sphere_d(neighbors)
 #         DE = z - easom(neighbors)
 #         DE = z - shubert(neighbors)
@@ -77,9 +77,9 @@ while exp<num_of_iter:
             for i in range(0, dimensions):
                 xvals[i] = neighbors[i]
             
-        z = rastrigin_d(xvals)
+#         z = rastrigin_d(xvals)
 #         z = ackley_d(xvals)
-#         z = schwefel_d(xvals)
+        z = schwefel_d(xvals)
 #         z = sphere_d(xvals)
 #         z = easom(xvals)
 #         z = shubert(xvals)
@@ -110,5 +110,5 @@ for wr in results:
     sheet1.write(i, 1, times[i])
     i+=1
         
-wb.save('TA_rastrigin_10_secs.xls')
+wb.save('..\Results\\TA_schwefel_4_secs.xls')
 print("All saved")
