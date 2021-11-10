@@ -42,8 +42,8 @@ class Particle:
     # update new particle velocity
     def update_velocity(self,pos_best_g):
         w=0.9       # constant inertia weight (how much to weigh the previous velocity)
-        c1=1        # cognative constant
-        c2=2        # social constant
+        c1=.5        # cognative constant
+        c2=1        # social constant
 
         for i in range(0,num_dimensions):
             r1=random.random()
@@ -112,18 +112,18 @@ if __name__ == "__PSO__":
 # up=5.12      #dropwave
 # low=-512  #eggholder
 # up=512
-low=-500  #schwefel
-up=500
-# low=-10  #easom#holdertable
-# up=10    #shubert
+# low=-500  #schwefel
+# up=500
+low=-10  #easom#holdertable
+up=10    #shubert
 # low=-5  #ackley
 # up=5
 # low=-2  #sphere
 # up=2
 # low=0  #langermann
 # up=10
-num_of_iter=100
-dimensions= 3
+num_of_iter=1
+dimensions= 2
 
 exp=0
 while exp<num_of_iter:
@@ -133,7 +133,7 @@ while exp<num_of_iter:
     for i in range(0, dimensions):
         initial.append(random.uniform(low, up))
         bounds.append([low, up])
-    PSO(schwefel_d,initial,bounds,num_particles=1000,maxiter=5300)
+    PSO(holdertable,initial,bounds,num_particles=100,maxiter=4100)
     
     print(exp)
     total_time=time.process_time()-start_time
@@ -148,17 +148,17 @@ time_average=sum(times)/len(times)
 print("After",num_of_iter,"iterations of PSO it is found that it takes ",time_average," seconds and has a distance of ",results_average, " from the global minimum")
 
 #--- END ----------------------------------------------------------------------+
-import xlwt 
-from xlwt import Workbook 
-      
-wb = Workbook() 
-       
-sheet1 = wb.add_sheet('file')
-i=0
-for wr in results:
-    sheet1.write(i, 0, wr)
-    sheet1.write(i, 1, times[i])
-    i+=1
-          
-wb.save('..\Results\\PSO_schwefel_4_secs.xls')
-print("All saved")
+# import xlwt 
+# from xlwt import Workbook 
+#       
+# wb = Workbook() 
+#        
+# sheet1 = wb.add_sheet('file')
+# i=0
+# for wr in results:
+#     sheet1.write(i, 0, wr)
+#     sheet1.write(i, 1, times[i])
+#     i+=1
+#           
+# wb.save('..\Results\\PSO_sphere_2_secs.xls')
+# print("All saved")

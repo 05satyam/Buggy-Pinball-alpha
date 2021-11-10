@@ -8,23 +8,23 @@ from functions import *
 times=[]
 results=[]
 A = 10      # rastrigin factor
-final_temp = 0.01   # final temperature
-b = 0.99999825  # reducing factor of temperature
-neighbor_distance = 200 # the distance that a possible neighbor can have in x or y dimension
-dimensions= 3
+final_temp = 0.00001   # final temperature
+b = 0.999995  # reducing factor of temperature
+neighbor_distance = .5 # the distance that a possible neighbor can have in x or y dimension
+dimensions= 1
 
 # low=-5.12    #rastrigin
 # up=5.12      #dropwave
 # low=-512  #eggholder
 # up=512
-low=-500  #schwefel
-up=500
+# low=-500  #schwefel
+# up=500
 # low=-10  #easom#holdertable
 # up=10    #shubert
 # low=-5  #ackley
 # up=5
-# low=-2  #sphere
-# up=2
+low=-2  #sphere
+up=2
 # low=0  #langermann
 # up=10
 num_of_iter=100 #number of experiment iterations
@@ -32,15 +32,15 @@ num_of_iter=100 #number of experiment iterations
 exp=0
 while exp<num_of_iter:
     start_time=time.process_time()
-    T = 100 # starting temperature
+    T = .0001 # starting temperature
     xvals=[]
     for i in range(0, dimensions):
         xvals.append(random.uniform(low, up))
     
 #     z = rastrigin_d(xvals)
 #     z = ackley_d(xvals)
-    z = schwefel_d(xvals)
-#     z = sphere_d(xvals)
+#     z = schwefel_d(xvals)
+    z = sphere_d(xvals)
 #     z = easom(xvals)
 #     z = shubert(xvals)
 #     z = eggholder(xvals)
@@ -65,8 +65,8 @@ while exp<num_of_iter:
     
 #         DE = z - rastrigin_d(neighbors) #cost difference
 #         DE = z - ackley_d(neighbors)
-        DE = z - schwefel_d(neighbors)
-#         DE = z - sphere_d(neighbors)
+#         DE = z - schwefel_d(neighbors)
+        DE = z - sphere_d(neighbors)
 #         DE = z - easom(neighbors)
 #         DE = z - shubert(neighbors)
 #         DE = z - eggholder(neighbors)
@@ -84,8 +84,8 @@ while exp<num_of_iter:
         
 #         z = rastrigin_d(xvals)
 #         z = ackley_d(xvals)
-        z = schwefel_d(xvals)
-#         z = sphere_d(xvals)
+#         z = schwefel_d(xvals)
+        z = sphere_d(xvals)
 #         z = easom(xvals)
 #         z = shubert(xvals)
 #         z = eggholder(xvals)
@@ -117,6 +117,6 @@ for wr in results:
     sheet1.write(i, 0, wr)
     sheet1.write(i, 1, times[i])
     i+=1
-             
-wb.save('..\Results\\SA_schwefel_4_secs.xls')
+
+wb.save('..\Results\\SA_sphere_2_secs.xls')
 print("All saved")

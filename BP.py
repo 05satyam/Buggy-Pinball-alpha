@@ -4,20 +4,22 @@ import numpy as np
 import random
 from functions import *
 import time
-from matplotlib.streamplot import OutOfBounds
 
-A = 10
-# low=-5.12    #rastrigin
-# up=5.12
-low=-500  #schwefel
-up=500
+###############limits of variables for each function#####################
+low=-5.12    #rastrigin
+up=5.12     #dropwave
+# low=-500  #schwefel
+# up=500
 # low=-5  #ackley
 # up=5
 # low=-2  #sphere
 # up=2
 # low=0  #langermann
 # up=10
-            
+# low=-10  #easom
+# up=10
+# low=-512  #eggholder
+# up=512
 #################################functions begin###########################################
 def plotPoint(xvals, cost, i, step, a):
     print("point ",i," (", end =" ")
@@ -25,28 +27,26 @@ def plotPoint(xvals, cost, i, step, a):
         print(x,",", end =" ")
     print(cost,") step",step,"angle",a)
 #################################functions end############################################
-num_of_iter=100
-dimensions = 5  #without y axis
+num_of_iter=30
+dimensions = 2  #without y axis
 #define hyper-parameters
-startResultant = -50
+startResultant = -.5
 endResultant = -.0001
-startAngle = .1
-endAngle = 1
-rounds = 2400000
-numOfSteps = 100
+startAngle = 20
+endAngle = 40
+rounds = 1100
+numOfSteps = 30
+fitness = rastrigin
 
 times=[]
 results=[]
 exp=0
-while exp<num_of_iter:
+while exp<num_of_iter:#number of experiments
     #get random initial point
     xvals=[]
     for i in range(0, dimensions):
         xvals.append(random.uniform(low, up))
-#     y = rastrigin_d(xvals)
-#     y = ackley_d(xvals)
-#     y = sphere_d(xvals)
-    y = schwefel_d(xvals)
+    y = fitness(xvals)
 
 #     plotPoint(xvals, y, -1, startResultant, startAngle)
                     
@@ -54,11 +54,11 @@ while exp<num_of_iter:
     i=0
     #the actual procedure of the algorithm starts here
     while i<rounds:
-        #setting direction randomly, but not at a similar direction as the previous vector        
+        #setting direction randomly     
         xsteps=[]
         for j in range(0, dimensions):
             xsteps.append(random.uniform(-1, 1))
-        #define cs for resultant and angle
+        #define cooling schedules for resultant and angle
         resultant = startResultant - i*(startResultant-endResultant)/rounds
         a = startAngle - i*(startAngle-endAngle)/rounds
         
@@ -84,10 +84,7 @@ while exp<num_of_iter:
             xcurs.append(xvals[j] + xsteps[j])
         yCur = y + yStep
         
-#         onfunc = rastrigin_d(xcurs)
-#         onfunc = ackley_d(xcurs)
-#         onfunc = sphere_d(xcurs)
-        onfunc = schwefel_d(xcurs)
+        onfunc = fitness(xcurs)
         
         if yCur < onfunc:
             isUnderneath = True
@@ -102,10 +99,10 @@ while exp<num_of_iter:
                     break
             if OutOfBounds==True:
                 countSteps+=1
-                continue
+                break
             if isUnderneath==False:
-                # if the line is underneath the function, find the point crossing
-                if yCur<onfunc or abs(yCur-onfunc)<0.000001:
+                if yCur<onfunc or abs(yCur-onfunc)<0.000001:####crossing detected implementation
+                    ####recursive refining implementation
                     inSteps=[]
                     for j in xsteps:
                         inSteps.append(j)
@@ -124,22 +121,18 @@ while exp<num_of_iter:
                                 xcurs[j] -= inSteps[j]
                             yCur -= inYstep
                         
-#                         onfunc = rastrigin_d(xcurs)
-#                         onfunc = ackley_d(xcurs)
-#                         onfunc = sphere_d(xcurs)
-                        onfunc = schwefel_d(xcurs)
-                        
-                        #if step gets too small, exit because we have a satisfactory accurate solution
+                        onfunc = fitness(xcurs)
+                        #if step gets too small, exit because we have a satisfactorily accurate solution
                         if inYstep==0:
                             yCur = onfunc
                     for j in range(0, dimensions):
                         xvals[j] = xcurs[j]
-                    y = yCur                
+                    y = onfunc                
 #                     plotPoint(xvals, y, i, resultant, a)
                     break
             else:
-                # if the line is underneath the function, find the point crossing
-                if yCur>onfunc or abs(yCur-onfunc)<0.000001:
+                if yCur>onfunc or abs(yCur-onfunc)<0.000001:####crossing detected implementation
+                    ####recursive refining implementation
                     inSteps=[]
                     for j in xsteps:
                         inSteps.append(j)
@@ -157,29 +150,21 @@ while exp<num_of_iter:
                             for j in range(0, dimensions):
                                 xcurs[j] -= inSteps[j]
                             yCur -= inYstep
-                         
-#                         onfunc = rastrigin_d(xcurs)
-#                         onfunc = ackley_d(xcurs)
-#                         onfunc = sphere_d(xcurs)
-                        onfunc = schwefel_d(xcurs)
                         
-                        
-                        #if step gets too small, exit because we have a satisfactory accurate solution
+                        onfunc = fitness(xcurs)
+                        #if step gets too small, exit because we have a satisfactorily accurate solution
                         if inYstep==0:
                             yCur = onfunc
                     for j in range(0, dimensions):
                         xvals[j] = xcurs[j]
-                    y = yCur                
+                    y = onfunc                
 #                     plotPoint(xvals, y, i, resultant, a)
                     break
             countSteps+=1
             for j in range(0, dimensions):
                 xcurs[j] += xsteps[j]
             yCur += yStep
-#             onfunc = rastrigin_d(xcurs)
-#             onfunc = ackley_d(xcurs)
-#             onfunc = sphere_d(xcurs)
-            onfunc = schwefel_d(xcurs)
+            onfunc = fitness(xcurs)
         i=i+1
     print(exp)
     total_time=time.process_time()-start_time
@@ -187,22 +172,23 @@ while exp<num_of_iter:
     results.append(y) #collect accuracy and time results of each algorithm run
     times.append(total_time)
     exp+=1
+#     print("Time:",total_time,"Precision:",y)
 # plotPoint(xvals, y, i, resultant, a)
 results_average=sum(results)/len(results) #get an average
 time_average=sum(times)/len(times)
 print("After",num_of_iter,"iterations of variant tr3 it is found that it takes ",time_average," seconds and has a distance of ",results_average, " from the global minimum")
-
-import xlwt 
-from xlwt import Workbook 
-                       
-wb = Workbook() 
-
-sheet1 = wb.add_sheet('file')
-i=0
-for wr in results:
-    sheet1.write(i, 0, wr)
-    sheet1.write(i, 1, times[i])
-    i+=1
-
-wb.save('..\Results\\variantTR4_schwefel_6_secs.xls')
-print("All saved")
+###############store results to xls file##############
+# import xlwt 
+# from xlwt import Workbook 
+#                        
+# wb = Workbook() 
+# 
+# sheet1 = wb.add_sheet('file')
+# i=0
+# for wr in results:
+#     sheet1.write(i, 0, wr)
+#     sheet1.write(i, 1, times[i])
+#     i+=1
+# 
+# wb.save('..\Results\\variantTR4_schwefel_3_secs_1.xls')
+# print("All saved")

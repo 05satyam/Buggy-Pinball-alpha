@@ -11,4 +11,4 @@ Algorithms implemented and ready for multiple iterations and storage of results:
 
 - Particle Swarm Optimization (PSO.py)
 
--Buggy Pinball (BP.py)
+- Buggy Pinball (BP.py)

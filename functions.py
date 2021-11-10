@@ -1,9 +1,9 @@
 import math
 
-def sphere(x, y):   # limits -inf <= x,y <= inf
-    return x ** 2 + y ** 2
+# def sphere(x, y):   # limits -inf <= x,y <= inf
+#     return x ** 2 + y ** 2
 
-def sphere_d(xvals):
+def sphere(xvals):
     result = 0
     for x in xvals:
         result += x**2
@@ -24,7 +24,7 @@ def booth_dx(x, y):
 def booth_dy(x, y):
     return 10*y + 8*x - 38
 #########################################
-def rastrigin_d(xvals):
+def rastrigin(xvals):
     result = len(xvals)*10
     for x in xvals:
         result += x**2 - 10*math.cos(2*math.pi*x)
@@ -66,10 +66,10 @@ def eggholder_dx(x, y):
 def eggholder_dy(x, y):
     return -math.sin(math.sqrt(abs(x/2 + y + 47))) + ((- y - 47)*(x/2 + y + 47)*math.cos(math.sqrt(abs(x/2 + y + 47)))) / (2*abs(y + x/2 + 47)**(3/2)) - (x*(y - x + 47)*math.cos(math.sqrt(abs(y - x + 47)))) / (2*abs(y - x + 47)**(3/2))
 #########################################
-def ackley(x, y):
-    return -20*math.exp(-0.2*math.sqrt(0.5*(x**2 + y**2))) - math.exp(0.5*(math.cos(2*math.pi*x) + math.cos(2*math.pi*y))) + math.e + 20
+# def ackley(x, y):
+#     return -20*math.exp(-0.2*math.sqrt(0.5*(x**2 + y**2))) - math.exp(0.5*(math.cos(2*math.pi*x) + math.cos(2*math.pi*y))) + math.e + 20
 
-def ackley_d(xvals):
+def ackley(xvals):
     sum1 = 0
     sum2 = 0
     for x in xvals:
@@ -92,7 +92,7 @@ def goldsteinPrince(x, y):
 def goldsteinPrince_dx(x, y):
     return (2*(x + y + 1)*(3*x**2 + 6*x*y + - 14*x +3*y**2 - 14*y + 19) + ((x + y + 1)**2)*(6*x + 6*y - 14))*(((2*x - 3*y)**2)*(12*x**2 - 36*x*y - 32*x + 27*y**2 + 48*y + 18) + 30) + (((x + y + 1)**2)*(3*x**2 + 6*x*y + - 14*x + 3*y**2 - 14*y + 19) + 1)*(4*(2*x - 3*y)*(12*x**2  - 36*x*y - 32*x + 27*y**2 + 48*y + 18) + ((2*x - 3*y)**2)*(24*x - 36*y - 32))
 #########################################
-def schwefel_d(xvals):
+def schwefel(xvals):
     result = len(xvals)*418.9829
     for x in xvals:
         result += x*math.sin(math.sqrt(abs(x)))
@@ -197,3 +197,10 @@ def dropwave1(x, y):
 
 def dropwave(x):
     return -(1 + math.cos(12*math.sqrt(x[0]**2 + x[1]**2))) / (0.5*(x[0]**2 + x[1]**2) + 2)
+#########################################
+def michalewicz(x):
+    m=10
+    res=0
+    for i in range(1, len(x)+1):
+        res-=math.sin(x[i])*(math.sin(i*x[i]**2/math.pi))**(2*m)
+    return res

@@ -11,11 +11,9 @@ import xlwt
 from xlwt import Workbook 
 
 funcs = ['rastrigin', 'ackley', 'sphere', 'easom', 'shubert', 'schwefel', 'holdertable', 'eggholder', 'dropwave', 'langermann'] #3D
-# funcs = ['rastrigin', 'ackley', 'sphere', 'schwefel'] #4D
 
 xls = pd.ExcelFile("convergence_MAE.xls")
 lenOfExcel = 89    #3D
-# lenOfExcel = 28     #4D
 sheetX = xls.parse(0)
 
 BP_res = []
@@ -67,10 +65,10 @@ while i<=lenOfExcel:
             plt.plot(times2, results2, 'g', label='Threshold Accepting')
             plt.plot(times3, results3, 'r', label='Particle Swarm Optimization')
              
-            plt.legend()
+#             plt.legend()
              
-            plt.title(funcs[k]+' function')
-            plt.xlabel('time (seconds)')
+#             plt.title(funcs[k]+' function')
+            plt.xlabel('time allowances (seconds)')
             plt.ylabel('Mean Absolute Error')
 #             plt.ylabel('Root-mean-square deviation')
             k+=1
@@ -106,7 +104,7 @@ plt.plot(times3, results3, 'r', label='Particle Swarm Optimization')
              
 plt.legend()
              
-plt.title(funcs[k]+' function')
+# plt.title(funcs[k]+' function')
 plt.xlabel('time (seconds)')
 plt.ylabel('Mean Absolute Error')
 # plt.ylabel('Root-mean-square deviation')

@@ -24,6 +24,8 @@ def booth_dx(x, y):
 def booth_dy(x, y):
     return 10*y + 8*x - 38
 #########################################
+def rastrigin(x, y):
+    return 20 + x**2 - 10*math.cos(2*math.pi*x) + y**2 - 10*math.cos(2*math.pi*y)
 def rastrigin_d(xvals):
     result = len(xvals)*10
     for x in xvals:
@@ -92,6 +94,9 @@ def goldsteinPrince(x, y):
 def goldsteinPrince_dx(x, y):
     return (2*(x + y + 1)*(3*x**2 + 6*x*y + - 14*x +3*y**2 - 14*y + 19) + ((x + y + 1)**2)*(6*x + 6*y - 14))*(((2*x - 3*y)**2)*(12*x**2 - 36*x*y - 32*x + 27*y**2 + 48*y + 18) + 30) + (((x + y + 1)**2)*(3*x**2 + 6*x*y + - 14*x + 3*y**2 - 14*y + 19) + 1)*(4*(2*x - 3*y)*(12*x**2  - 36*x*y - 32*x + 27*y**2 + 48*y + 18) + ((2*x - 3*y)**2)*(24*x - 36*y - 32))
 #########################################
+def schwefel(x, y):
+    return 2*418.9829 + x*math.sin(math.sqrt(abs(x))) + y*math.sin(math.sqrt(abs(y)))
+
 def schwefel_d(xvals):
     result = len(xvals)*418.9829
     for x in xvals:
@@ -197,3 +202,7 @@ def dropwave1(x, y):
 
 def dropwave(x):
     return -(1 + math.cos(12*math.sqrt(x[0]**2 + x[1]**2))) / (0.5*(x[0]**2 + x[1]**2) + 2)
+##########################################
+def michalewicz(x, y):
+    m=10
+    return -math.sin(x)*(math.sin(1*x**2/math.pi))**(2*m)-math.sin(y)*(math.sin(2*y**2/math.pi))**(2*m)

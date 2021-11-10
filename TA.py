@@ -7,26 +7,26 @@ from functions import *
 times=[]
 results=[]
 A = 10      # rastrigin factor
-init_T = 800          # initial threshold
-rounds = 5400000          # number of parts that the threshold sequence will contain
-neighbor_distance = 300   # the distance that a possible neighbor can have in x or y dimension
+init_T = 1          # initial threshold
+rounds = 260000          # number of parts that the threshold sequence will contain
+neighbor_distance = 5   # the distance that a possible neighbor can have in x or y dimension
 T = np.linspace(init_T, 0, rounds)  #all threshold values for the TA
-dimensions= 3   #only the variables of the objective function
+dimensions= 2   #only the variables of the objective function
 
 # low=-5.12    #rastrigin
 # up=5.12      #dropwave
 # low=-512  #eggholder
 # up=512
-low=-500  #schwefel
-up=500
+# low=-500  #schwefel
+# up=500
 # low=-10  #easom#holdertable
 # up=10    #shubert
 # low=-5  #ackley
 # up=5
 # low=-2  #sphere
 # up=2
-# low=0  #langermann
-# up=10 
+low=0  #langermann
+up=10
 num_of_iter=100 #number of experiment iterations
 
 exp=0
@@ -37,13 +37,13 @@ while exp<num_of_iter:
         xvals.append(random.uniform(low, up))
 #     z = rastrigin_d(xvals)
 #     z = ackley_d(xvals)
-    z = schwefel_d(xvals)
+#     z = schwefel_d(xvals)
 #     z = sphere_d(xvals)
 #     z = easom(xvals)
 #     z = shubert(xvals)
 #     z = eggholder(xvals)
 #     z = dropwave(xvals)
-#     z = langermann(xvals)
+    z = langermann(xvals)
 #     z = holdertable(xvals)
     
     start_time=time.process_time()
@@ -64,13 +64,13 @@ while exp<num_of_iter:
              
 #         DE = z - rastrigin_d(neighbors) #cost difference
 #         DE = z - ackley_d(neighbors)
-        DE = z - schwefel_d(neighbors)
+#         DE = z - schwefel_d(neighbors)
 #         DE = z - sphere_d(neighbors)
 #         DE = z - easom(neighbors)
 #         DE = z - shubert(neighbors)
 #         DE = z - eggholder(neighbors)
 #         DE = z - dropwave(neighbors)
-#         DE = z - langermann(neighbors)
+        DE = z - langermann(neighbors)
 #         DE = z - holdertable(neighbors)
         
         if DE > -t:    # if the new solution is better, accept it
@@ -79,13 +79,13 @@ while exp<num_of_iter:
             
 #         z = rastrigin_d(xvals)
 #         z = ackley_d(xvals)
-        z = schwefel_d(xvals)
+#         z = schwefel_d(xvals)
 #         z = sphere_d(xvals)
 #         z = easom(xvals)
 #         z = shubert(xvals)
 #         z = eggholder(xvals)
 #         z = dropwave(xvals)
-#         z = langermann(xvals)
+        z = langermann(xvals)
 #         z = holdertable(xvals)
     print(exp)
     total_time=time.process_time()-start_time
@@ -93,6 +93,7 @@ while exp<num_of_iter:
     results.append(z) #collect accuracy and time results of each algorithm run
     times.append(total_time)
     exp+=1
+#     print("Time:",total_time,"Precision:",z)
 
 results_average=sum(results)/len(results) #get an average
 time_average=sum(times)/len(times)
@@ -110,5 +111,5 @@ for wr in results:
     sheet1.write(i, 1, times[i])
     i+=1
         
-wb.save('..\Results\\TA_schwefel_4_secs.xls')
+wb.save('..\Results\\TA_langermann_3_secs_7.xls')
 print("All saved")

@@ -10,14 +10,14 @@ import time
 # low_y=-5.12
 # up_y=5.12
 A = 10
-low_x=-512  #eggholder
-up_x=512
-low_y=-512
-up_y=512
-# low_x=-500  #schwefel
-# up_x=500
-# low_y=-500
-# up_y=500
+# low_x=-512  #eggholder
+# up_x=512
+# low_y=-512
+# up_y=512
+low_x=-500  #schwefel
+up_x=500
+low_y=-500
+up_y=500
 # low_x=-10  #easom
 # up_x=10    #shubert
 # low_y=-10  #holdertable
@@ -39,21 +39,21 @@ xvals = np.linspace(low_x, up_x, 300)
 yvals = np.linspace(low_y, up_y, 300)
 X, Y = np.meshgrid(xvals, yvals)
 
-mc = np.vectorize(rastrigin)
-Z = mc(X,Y, 10)
-# mc = np.vectorize(eggholder)
+# mc = np.vectorize(rastrigin)
 # Z = mc(X,Y)
-# mc = np.vectorize(schwefel)
+# mc = np.vectorize(eggholder1)
 # Z = mc(X,Y)
-# mc = np.vectorize(easom)
+mc = np.vectorize(schwefel)
+Z = mc(X,Y)
+# mc = np.vectorize(easom1)
 # Z = mc(X,Y)
-# mc = np.vectorize(shubert)
+# mc = np.vectorize(shubert1)
 # Z = mc(X,Y)
 # mc = np.vectorize(sphere)
 # Z = mc(X,Y)
 # mc = np.vectorize(ackley)
 # Z = mc(X,Y)
-# mc = np.vectorize(holdertable)
+# mc = np.vectorize(holdertable1)
 # Z = mc(X,Y)
 # mc = np.vectorize(dropwave)
 # Z = mc(X,Y)
@@ -63,7 +63,7 @@ Z = mc(X,Y, 10)
 # #plotting the function
 fig = plt.figure()
 ax = plt.axes(projection='3d')
-ax.plot_surface(X, Y, Z, cmap='inferno', alpha=.2)
+ax.plot_surface(X, Y, Z, cmap='inferno', alpha=1)
 ax.set_xlabel('X axis')
 ax.set_ylabel('Y axis')
 ax.set_zlabel('Z axis')
@@ -90,7 +90,7 @@ startStep = -500
 endStep = -.0001
 startAngle = 10
 endAngle = 40
-rounds = 10000
+rounds = 1
 numOfSteps = 25
 
 times=[]
@@ -99,8 +99,8 @@ for exp in range(0, num_of_iter):
     #get random initial point
     x = random.uniform(low_x, up_x)
     y = random.uniform(low_y, up_y)
-    z = rastrigin(x, y, A)
-#     z = eggholder(x, y)
+#     z = rastrigin(x, y, A)
+    z = eggholder1(x, y)
 #     z = schwefel(x, y)
 #     z = easom(x, y)
 #     z = shubert(x, y)
@@ -110,7 +110,7 @@ for exp in range(0, num_of_iter):
 #     z = langermann(x, y)
 #     z = dropwave(x, y)
 
-    plotPoint(x, y, z, -1, 0, 'black', -1)
+#     plotPoint(x, y, z, -1, 0, 'black', -1)
                     
     start_time=time.process_time()
     i=0
@@ -154,8 +154,8 @@ for exp in range(0, num_of_iter):
             y = y + yStep
             z = z + step
             
-            onfunc = rastrigin(x, y, A)
-#             onfunc = eggholder(x, y)
+#             onfunc = rastrigin(x, y, A)
+            onfunc = eggholder1(x, y)
 #             onfunc = schwefel(x, y)
 #             onfunc = easom(x, y)
 #             onfunc = shubert(x, y)
@@ -180,7 +180,7 @@ for exp in range(0, num_of_iter):
             if isUnderneath==False:
                 # if the line crosses the function stop
                 if abs(z-onfunc)<0.000001:# this means z-onfunc==0
-                    plotPoint(x, y, z, i, step, 'r', a)
+#                     plotPoint(x, y, z, i, step, 'r', a)
                     break
                 # if the line is underneath the function, find the point crossing
                 elif z<onfunc:
@@ -201,8 +201,8 @@ for exp in range(0, num_of_iter):
                             y = y-inYstep
                             z = z-inZstep
                         
-                        onfunc = rastrigin(x, y, A)
-#                         onfunc = eggholder(x, y)
+#                         onfunc = rastrigin(x, y, A)
+                        onfunc = eggholder1(x, y)
 #                         onfunc = schwefel(x, y)
 #                         onfunc = easom(x, y)
 #                         onfunc = shubert(x, y)
@@ -215,13 +215,13 @@ for exp in range(0, num_of_iter):
                         #if step gets too small, exit because we have a satisfactory accurate solution
                         if inZstep==0:
                             z=onfunc                
-                    plotPoint(x, y, z, i, step, 'r', a)
+#                     plotPoint(x, y, z, i, step, 'r', a)
                     break
                 countSteps+=1
             else:
                 # if the line crosses the function stop
                 if abs(z-onfunc)<0.000001:# this means z-onfunc==0
-                    plotPoint(x, y, z, i, step, 'r', a)
+#                     plotPoint(x, y, z, i, step, 'r', a)
                     break
                 # if the line is over the function, find the point crossing
                 elif z>onfunc:
@@ -242,8 +242,8 @@ for exp in range(0, num_of_iter):
                             y = y-inYstep
                             z = z-inZstep
                         
-                        onfunc = rastrigin(x, y, A)
-#                         onfunc = eggholder(x, y)
+#                         onfunc = rastrigin(x, y, A)
+                        onfunc = eggholder1(x, y)
 #                         onfunc = schwefel(x, y)
 #                         onfunc = easom(x, y)
 #                         onfunc = shubert(x, y)
@@ -256,7 +256,7 @@ for exp in range(0, num_of_iter):
                         #if step gets too small, exit because we have a satisfactory accurate solution
                         if inZstep==0:
                             z=onfunc                 
-                    plotPoint(x, y, z, i, step, 'r', a)
+#                     plotPoint(x, y, z, i, step, 'r', a)
                     break
                 countSteps+=1
         i=i+1
@@ -267,11 +267,11 @@ for exp in range(0, num_of_iter):
             z = z - countSteps*step
                         
     print(exp)
-    ax.plot(xarr, yarr, zarr, color='b')    #connecting the points
+#     ax.plot(xarr, yarr, zarr, color='b')    #connecting the points
     results.append(z) #collect accuracy and time results of each algorithm run
     total_time=time.process_time()-start_time
     times.append(total_time)
-plotPoint(x, y, z, i, step, 'green', a)
+# plotPoint(x, y, z, i, step, 'green', a)
 results_average=sum(results)/len(results) #get an average
 time_average=sum(times)/len(times)
 print("After",num_of_iter,"iterations of variant tr3 it is found that it takes ",time_average," seconds and has a distance of ",results_average, " from the global minimum")
